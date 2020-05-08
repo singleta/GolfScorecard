@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="410dp"
+        android:layout_height="178dp"
+        android:layout_marginTop="40dp"
+        android:shrinkColumns="*"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/drive"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/drive" />
+
+            <ToggleButton
+                android:id="@+id/driveLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/driveleft"
+                android:textOff="@string/left"
+                android:textOn="@string/l" />
+
+            <ToggleButton
+                android:id="@+id/driveFairway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hitfairway"
+                android:textOff="@string/fairway"
+                android:textOn="@string/hit" />
+
+
+            <ToggleButton
+                android:id="@+id/driveRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/right"
+                android:textOff="@string/rightOff"
+                android:textOn="@string/rightOn" />
+
+
+            <ToggleButton
+                android:id="@+id/fairwayBunker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bunker"
+                android:textOff="@string/bunkerOff"
+                android:textOn="@string/sand" />
+        </TableRow>
+
+        <TableRow>
+
+            <ToggleButton
+                android:id="@+id/driveTree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/tree"
+                android:textOff="@string/treeOff"
+                android:textOn="@string/treeOn" />
+
+            <ToggleButton
+                android:id="@+id/driveOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hide_bottom_view_on_scroll_behavior"
+                android:textOff="@string/obOff"
+                android:textOn="@string/obOn" />
+
+            <ToggleButton
+                android:id="@+id/driveSemi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/semi"
+                android:textOff="@string/semiOff"
+                android:textOn="@string/semiOn" />
+
+            <ToggleButton
+                android:id="@+id/driveDeep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deep"
+                android:textOff="@string/deepOff"
+                android:textOn="@string/deepOn" />
+
+
+        </TableRow>
+
+
+        <TableRow>
+
+            <ToggleButton
+                android:id="@+id/drivePenalty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:textOff="@string/penaltyOff"
+                android:textOn="@string/penaltyOn" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="408dp"
+
+        android:layout_height="200dp"
+        android:layout_marginTop="3dp"
+        android:shrinkColumns="*"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/approach"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/approach" />
+
+            <ToggleButton
+                android:id="@+id/approachLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/approachleft"
+                android:textOff="@string/leftOff"
+                android:textOn="@string/leftOn" />
+
+
+            <ToggleButton
+                android:id="@+id/approachHitGreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hitgreen"
+                android:textOff="@string/green"
+                android:textOn="@string/gir" />
+
+            <ToggleButton
+                android:id="@+id/approachRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/approachright"
+                android:textOff="@string/rightOff"
+                android:textOn="@string/rightOn" />
+
+            <ToggleButton
+                android:id="@+id/approachBunker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bunker"
+                android:textOff="@string/bunkerOff"
+                android:textOn="@string/sand" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <ToggleButton
+                android:id="@+id/approachMiddle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:textOff="@string/middleOff"
+                android:textOn="@string/middleOn" />
+
+            <ToggleButton
+                android:id="@+id/approachShort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shortShot"
+                android:textOff="@string/shortOn"
+                android:textOn="@string/shortOff" />
+
+            <ToggleButton
+                android:id="@+id/approachLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/longApproach"
+                android:textOff="@string/longOff"
+                android:textOn="@string/longOn" />
+
+
+            <ToggleButton
+                android:id="@+id/approachFringe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fringe"
+                android:textOff="@string/fringeOff"
+                android:textOn="@string/fringeOn" />
+        </TableRow>
+
+        <TableRow>
+
+            <ToggleButton
+                android:id="@+id/approachPenalty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:textOff="@string/penaltyOff"
+                android:textOn="@string/penaltyOn" />
+
+            <ToggleButton
+                android:id="@+id/approachOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hide_bottom_view_on_scroll_behavior"
+                android:textOff="@string/obOff"
+                android:textOn="@string/obOn" />
+
+
+            <ToggleButton
+                android:id="@+id/approachTree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tree"
+                android:textOff="@string/treeOff"
+                android:textOn="@string/treeOn" />
+        </TableRow>
+
+        <TableRow>
+
+            <ToggleButton
+                android:id="@+id/approach40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/approach40"
+                android:textOn="@string/approach40" />
+
+            <ToggleButton
+                android:id="@+id/approach80"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/approach80"
+                android:textOn="@string/approach80" />
+
+            <ToggleButton
+                android:id="@+id/approach120"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/middle"
+                android:textOff="@string/approach120"
+                android:textOn="@string/approach120" />
+
+            <ToggleButton
+                android:id="@+id/approach160"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/approach160"
+                android:textOn="@string/approach160" />
+
+            <ToggleButton
+                android:id="@+id/approach160Plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="@string/approachPlus"
+                android:textOn="@string/approachPlus" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout3"
+        android:layout_width="409dp"
+        android:layout_height="151dp"
+        android:shrinkColumns="*"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout2">
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/putt0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:hapticFeedbackEnabled="true"
+                android:text="@string/putt0" />
+
+            <Button
+                android:id="@+id/putt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hapticFeedbackEnabled="true"
+                android:text="@string/putt1" />
+
+            <Button
+                android:id="@+id/putt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hapticFeedbackEnabled="true"
+                android:text="@string/putt2" />
+
+            <Button
+                android:id="@+id/putt3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hapticFeedbackEnabled="true"
+                android:text="@string/putt3" />
+
+            <EditText
+                android:id="@+id/puttingLabel"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/putting" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:id="@+id/zeroPutts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="4"
+                android:hapticFeedbackEnabled="true"
+                android:text="@string/puttZero" />
+
+            <EditText
+                android:id="@+id/putts"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/totalPutts" />
+
+            <EditText
+                android:id="@+id/totalPutts"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:ems="10"
+                android:inputType="number" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout3"
+        tools:layout_editor_absoluteX="1dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
