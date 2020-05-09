@@ -36,25 +36,17 @@ public class ButtonStore {
 //    public static final String MEDIUM="10-20";
 //    public static final String LONG="20-30";
 //    public static final String HUGE="30+ ";
-    public static final String D_LEFT = "dLeft";
-    public static final String D_RIGHT = "dRight";
-    public static final String D_FAIRWAY = "dFair";
-    public static final String D_BUNKER = "dBunker";
-    public static final String D_TREE = "dTree";
-    public static final String D_OB = "dOB";
-    public static final String D_PEN = "dPen";
-    public static final String D_SHORT = "dShort";
-    public static final String A_LEFT = "aLeft";
-    public static final String A_RIGHT = "aRight";
-    public static final String A_FAIRWAY = "aFair";
-    public static final String A_BUNKER = "aBunker";
-    public static final String A_TREE = "aTree";
-    public static final String A_OB = "aOB";
-    public static final String A_PEN = "aPen";
-    public static final String A_SHORT = "aShort";
-    public static final String A_MIDDLE = "aMiddle";
-    public static final String A_LONG = "aLong";
-    public static final String A_FRINGE = "aFringe";
+    public static final String LEFT = "Left";
+    public static final String RIGHT = "Right";
+    public static final String FAIRWAY = "Fair";
+    public static final String BUNKER = "Bunker";
+    public static final String TREE = "Tree";
+    public static final String OB = "OB";
+    public static final String PEN = "Pen";
+    public static final String SHORT = "Short";
+    public static final String MIDDLE = "Middle";
+    public static final String LONG = "Long";
+    public static final String FRINGE = "Fringe";
     public static final String FORTY = "0-40";
     public static final String EIGHTY = "40-80";
     public static final String ONE_TWENTY = "80-120";
@@ -122,28 +114,28 @@ public class ButtonStore {
 
     private void toggleDriveButtonStates(ToggleButton tb) {
         Map<String, ToggleButton> buttons = new HashMap<>();
-        approachButtons.forEach((k, v) -> {
+        driveButtons.forEach((k, v) -> {
             buttons.put(k, (ToggleButton) v);
         });
 
-        String text = String.valueOf(tb.getText());
+        String text = String.valueOf(tb.getTextOff());
         switch (text) {
-            case D_FAIRWAY:
+            case FAIRWAY:
                 buttons.remove(text);
                 break;
-            case D_LEFT:
-            case D_RIGHT:
-                removeButtons(buttons, text,  D_TREE, D_OB, D_PEN, D_BUNKER, D_SHORT);
+            case LEFT:
+            case RIGHT:
+                removeButtons(buttons, text,  TREE, OB, PEN, BUNKER, SHORT);
                 break;
-            case D_BUNKER:
-            case D_OB:
-            case D_PEN:
-            case D_TREE:
-                removeButtons(buttons, text, D_LEFT, D_RIGHT);
+            case BUNKER:
+            case OB:
+            case PEN:
+            case TREE:
+                removeButtons(buttons, text, LEFT, RIGHT);
                 break;
-            case D_SHORT:
-                buttons.remove(text);
-                break;
+//            case SHORT:
+//                buttons.remove(text);
+//                break;
         }
         turnOffToggleButtons(buttons);
 

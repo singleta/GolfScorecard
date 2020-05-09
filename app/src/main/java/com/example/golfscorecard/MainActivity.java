@@ -1,5 +1,7 @@
 package com.example.golfscorecard;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import com.example.golfscorecard.ui.main.HolePage;
@@ -24,6 +26,10 @@ import android.widget.ToggleButton;
 
 import com.example.golfscorecard.ui.main.SectionsPagerAdapter;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +63,18 @@ public class MainActivity extends AppCompatActivity {
     public void saveData() {
         List<HoleScoreFragment> holePages = sectionsPagerAdapter.getHolePages();
         saveHoleData = new SaveHoleData(holePages);
-        saveHoleData.saveData();
+        List<HoleDetails> allHoles = saveHoleData.saveData();
+
+        LocalDate date = LocalDate.now();
+        String filename = R.string.app_name + date.toString();
+        try (FileOutputStream fos = this.openFileOutput(filename, Context.MODE_PRIVATE)) {
+            for (HoleDetails h : allHoles) {
+                fos.write(h.toString().getBytes());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.golfscorecard;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -13,6 +15,7 @@ import com.example.golfscorecard.buttons.PuttButton;
 import com.example.golfscorecard.ui.main.HoleScoreFragment;
 import com.example.golfscorecard.ui.main.PuttLength;
 
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,11 +42,14 @@ public class SaveHoleData {
         this.holePages = holePages;
     }
 
-    public void saveData() {
+    public List<HoleDetails> saveData() {
+        List<HoleDetails> holeDetailsList = new ArrayList<>(18);
         for (HoleScoreFragment holePage : holePages) {
             saveHoleData(holePage);
             System.out.println(holeDetails.toString());
+            holeDetailsList.add(holeDetails);
         }
+        return holeDetailsList;
     }
 
     public void saveHoleData(HoleScoreFragment holeScoreFragment) {
