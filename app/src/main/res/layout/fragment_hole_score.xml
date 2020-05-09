@@ -43,17 +43,17 @@
                 android:id="@+id/driveLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/driveleft"
+                android:text="@string/left"
                 android:textOff="@string/left"
-                android:textOn="@string/l" />
+                android:textOn="@string/leftOn" />
 
             <ToggleButton
                 android:id="@+id/driveFairway"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hitfairway"
+                android:text="@string/fairwayOff"
                 android:textOff="@string/fairway"
-                android:textOn="@string/hit" />
+                android:textOn="@string/fairwayOn" />
 
 
             <ToggleButton
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/bunker"
                 android:textOff="@string/bunkerOff"
-                android:textOn="@string/sand" />
+                android:textOn="@string/bunkerOn" />
         </TableRow>
 
         <TableRow>
@@ -93,21 +93,13 @@
                 android:textOff="@string/obOff"
                 android:textOn="@string/obOn" />
 
-            <ToggleButton
-                android:id="@+id/driveSemi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/semi"
-                android:textOff="@string/semiOff"
-                android:textOn="@string/semiOn" />
-
-            <ToggleButton
-                android:id="@+id/driveDeep"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/deep"
-                android:textOff="@string/deepOff"
-                android:textOn="@string/deepOn" />
+<!--            <ToggleButton-->
+<!--                android:id="@+id/driveDeep"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/deep"-->
+<!--                android:textOff="@string/deepOff"-->
+<!--                android:textOn="@string/deepOn" />-->
 
 
         </TableRow>
@@ -151,7 +143,7 @@
                 android:id="@+id/approachLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/approachleft"
+                android:text="@string/left"
                 android:textOff="@string/leftOff"
                 android:textOn="@string/leftOn" />
 
@@ -160,15 +152,15 @@
                 android:id="@+id/approachHitGreen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hitgreen"
-                android:textOff="@string/green"
-                android:textOn="@string/gir" />
+                android:text="@string/girOff"
+                android:textOff="@string/girOff"
+                android:textOn="@string/girOn" />
 
             <ToggleButton
                 android:id="@+id/approachRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/approachright"
+                android:text="@string/right"
                 android:textOff="@string/rightOff"
                 android:textOn="@string/rightOn" />
 
@@ -178,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/bunker"
                 android:textOff="@string/bunkerOff"
-                android:textOn="@string/sand" />
+                android:textOn="@string/bunkerOn" />
 
         </TableRow>
 
@@ -227,6 +219,14 @@
                 android:layout_column="1"
                 android:textOff="@string/penaltyOff"
                 android:textOn="@string/penaltyOn" />
+
+            <ToggleButton
+                android:id="@+id/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/green"
+                android:textOff="@string/greenOff"
+                android:textOn="@string/greenOn" />
 
             <ToggleButton
                 android:id="@+id/approachOB"
@@ -281,8 +281,8 @@
                 android:id="@+id/approach160Plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textOff="@string/approachPlus"
-                android:textOn="@string/approachPlus" />
+                android:textOff="@string/approach160Plus"
+                android:textOn="@string/approach160Plus" />
         </TableRow>
     </TableLayout>
 
@@ -379,8 +379,8 @@
         android:id="@+id/spinner"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout3"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout3" />
 
     <EditText
         android:id="@+id/editText"

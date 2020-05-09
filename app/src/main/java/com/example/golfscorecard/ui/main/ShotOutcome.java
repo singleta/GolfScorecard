@@ -10,13 +10,12 @@ import java.util.stream.Collectors;
 public enum ShotOutcome {
     LEFT(R.id.driveLeft,"Left", "L"),
     FAIRWAY(R.id.driveFairway,"Fair", "F"),
-    GREEN(R.id.approachHitGreen,"Green", "GIR"),
     RIGHT(R.id.driveRight,"Right", "R"),
-    BUNKER(R.id.approachBunker,"Bunker", "Sand"),
+    BUNKER(R.id.approachBunker,"Bunker", "B"),
     TREE(R.id.driveTree,"Tree", "T"),
     OB(R.id.driveOB,"OB", "OB"),
-    SEMI(R.id.driveSemi,"Semi", "0-5"),
-    DEEP(R.id.driveDeep,"Deep", "5-10"),
+    GIR(R.id.approachHitGreen,"GIR", "GIR"),
+    GREEN(R.id.green,"Green", "X"),
     PENALTY(R.id.drivePenalty,"Pen", "P"),
     SHORT(R.id.approachShort,"Short", "S"),
     MIDDLE(R.id.approachMiddle,"Middle", "M"),
@@ -28,11 +27,31 @@ public enum ShotOutcome {
     ONE_SIXTY(R.id.approach160,"120-160", "160"),
     ONE_SIXTY_PLUS(R.id.approach160Plus, "160+", "160+");
 
+//    D_LEFT(R.id.driveLeft,"Left", "L"),
+//    D_FAIRWAY(R.id.driveFairway,"Fair", "F"),
+//    D_RIGHT(R.id.driveRight,"Right", "R"),
+//    D_BUNKER(R.id.driveBunker,"Bunker", "B"),
+//    D_TREE(R.id.driveTree,"Tree", "T"),
+//    D_OB(R.id.driveOB,"OB", "OB"),
+//    D_PENALTY(R.id.drivePenalty,"Pen", "P"),
+//    D_SHORT(R.id.approachShort,"Short", "S"),
+//    A_LEFT(R.id.approachLeft,"Left", "L"),
+//    A_RIGHT(R.id.approachRight,"Right", "R"),
+//    A_BUNKER(R.id.approachBunker,"Bunker", "B"),
+//    A_TREE(R.id.approachTree,"Tree", "T"),
+//    A_OB(R.id.approachOB,"OB", "OB"),
+//    A_PENALTY(R.id.approachPenalty,"Pen", "P"),
+//    A_SHORT(R.id.approachShort,"Short", "S"),
+//    GIR(R.id.gir,"GIR", "GIR"),
+//    GREEN(R.id.green,"Green", "X"),
+
+
+
     private int id;
     private String off;
     private String on;
 
-    public static ShotOutcome[] approachOnly = new ShotOutcome[]{GREEN, MIDDLE, LONG, FRINGE, FORTY, EIGHTY, ONE_TWENTY, ONE_SIXTY, ONE_SIXTY_PLUS};
+    public static ShotOutcome[] approachOnly = new ShotOutcome[]{GREEN, GIR, MIDDLE, LONG, FRINGE, FORTY, EIGHTY, ONE_TWENTY, ONE_SIXTY, ONE_SIXTY_PLUS};
 
     ShotOutcome(int id, String off, String on) {
         this.id = id;

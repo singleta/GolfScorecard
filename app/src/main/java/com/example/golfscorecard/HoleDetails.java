@@ -1,53 +1,54 @@
 package com.example.golfscorecard;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class  HoleDetails {
 
-    Date date;
-    String hole;
-    String par;
-    String score;
+    LocalDate date;
+    int hole;
+    int par;
+    int score;
     StringBuilder fairway;
     StringBuilder approach;
     String gir;
     StringBuilder puttLengths;
-    String totalPutts;
+    int totalPutts;
     String tees;
     String distanceToHole;
     String approachDistance;
 
-    public Date getDate() {
+    public static int[] parsByHole = new int[]{4,4,4,4,3,5,4,5,3,5,3,4,4,4,5,4,3,4};
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getHole() {
+    public int getHole() {
         return hole;
     }
 
-    public void setHole(String hole) {
+    public void setHole(int hole) {
         this.hole = hole;
     }
 
-    public String getPar() {
+    public int getPar() {
         return par;
     }
 
-    public void setPar(String par) {
+    public void setPar(int par) {
         this.par = par;
     }
 
-    public String getScore() {
+    public int getScore() {
         return score;
     }
 
     public void setScore(String score) {
-        this.score = score;
+        this.score = Integer.parseInt(score);
     }
 
     public StringBuilder getFairway() {
@@ -82,12 +83,12 @@ public class  HoleDetails {
         this.puttLengths = puttLengths;
     }
 
-    public String getTotalPutts() {
+    public int getTotalPutts() {
         return totalPutts;
     }
 
     public void setTotalPutts(String totalPutts) {
-        this.totalPutts = totalPutts;
+        this.totalPutts = Integer.parseInt(totalPutts);
     }
 
     public String getTees() {
@@ -116,7 +117,8 @@ public class  HoleDetails {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(hole).append(",")
+              sb.append(date).append(",")
+                .append(hole).append(",")
                 .append(par).append(",")
                 .append(score).append(",")
                 .append(nullCheck(fairway)).append(",")

@@ -50,7 +50,7 @@ public class HoleScoreFragment extends Fragment {
 
     ButtonStore buttonStore;
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    public static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
 
