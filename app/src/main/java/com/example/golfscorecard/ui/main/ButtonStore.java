@@ -1,6 +1,7 @@
 package com.example.golfscorecard.ui.main;
 
 import android.graphics.Color;
+import android.graphics.PathEffect;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +18,35 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Stream;
+
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_BUNKER;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_EIGHTY;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_FORTY;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_FRINGE;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_GIR;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_GREEN;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_LEFT;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_LONG;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_MIDDLE;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_OB;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_ONE_SIXTY;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_ONE_SIXTY_PLUS;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_ONE_TWENTY;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_PENALTY;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_RIGHT;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_SHORT;
+import static com.example.golfscorecard.ui.main.ShotOutcome.A_TREE;
+import static com.example.golfscorecard.ui.main.ShotOutcome.D_BUNKER;
+import static com.example.golfscorecard.ui.main.ShotOutcome.D_FAIRWAY;
+import static com.example.golfscorecard.ui.main.ShotOutcome.D_LEFT;
+import static com.example.golfscorecard.ui.main.ShotOutcome.D_OB;
+import static com.example.golfscorecard.ui.main.ShotOutcome.D_PENALTY;
+import static com.example.golfscorecard.ui.main.ShotOutcome.D_RIGHT;
+import static com.example.golfscorecard.ui.main.ShotOutcome.D_SHORT;
+import static com.example.golfscorecard.ui.main.ShotOutcome.D_TREE;
+import static com.example.golfscorecard.ui.main.ShotOutcome.approachDistances;
+import static com.example.golfscorecard.ui.main.ShotOutcome.approachOutcomes;
 
 public class ButtonStore {
 
@@ -36,22 +66,23 @@ public class ButtonStore {
 //    public static final String MEDIUM="10-20";
 //    public static final String LONG="20-30";
 //    public static final String HUGE="30+ ";
-    public static final String LEFT = "Left";
-    public static final String RIGHT = "Right";
-    public static final String FAIRWAY = "Fair";
-    public static final String BUNKER = "Bunker";
-    public static final String TREE = "Tree";
-    public static final String OB = "OB";
-    public static final String PEN = "Pen";
-    public static final String SHORT = "Short";
-    public static final String MIDDLE = "Middle";
-    public static final String LONG = "Long";
-    public static final String FRINGE = "Fringe";
-    public static final String FORTY = "0-40";
-    public static final String EIGHTY = "40-80";
-    public static final String ONE_TWENTY = "80-120";
-    public static final String ONE_SIXTY = "120-160";
-    public static final String ONE_SIXTY_PLUS = "160+";
+    public static final int DLEFT = D_LEFT.getId();
+    public static final int DRIGHT = D_RIGHT.getId();
+    public static final int DFAIRWAY = D_FAIRWAY.getId();
+    public static final int DBUNKER = D_BUNKER.getId();
+    public static final int DTREE = D_TREE.getId();
+    public static final int DOB = D_OB.getId();
+    public static final int DPEN = D_PENALTY.getId();
+    public static final int DSHORT = D_SHORT.getId();
+    public static final int ALEFT = A_LEFT.getId();
+    public static final int ARIGHT = A_RIGHT.getId();
+    public static final int ABUNKER = A_BUNKER.getId();
+    public static final int ATREE = A_TREE.getId();
+    public static final int AOB = A_OB.getId();
+    public static final int APEN = A_PENALTY.getId();
+    public static final int ASHORT = A_SHORT.getId();
+    public static final int AMIDDLE = A_MIDDLE.getId();
+    public static final int ALONG = A_LONG.getId();
 
     private View view;
 
@@ -95,12 +126,13 @@ public class ButtonStore {
         // Create Buttons
         shotOutcomes.forEach(shotOutcome -> {
             ToggleButton toggleButton = new ToggleButton(view.getContext());
-            String label = shotOutcome.getOff();
+            String label = toggleButton.getContext().getResources().getString(shotOutcome.getOff());
 //            String key = shotOutcome.getKey();
+            toggleButton.setId(shotOutcome.getId());
             toggleButton.setText(label);
             toggleButton.setTextOff(label);
-            toggleButton.setTextOn(shotOutcome.getOn());
-            toggleButtons.put(label, toggleButton);
+            toggleButton.setTextOn(toggleButton.getContext().getResources().getString(shotOutcome.getOn()));
+            toggleButtons.put(shotOutcome.name(), toggleButton);
             toggleButton.setOnClickListener(new ToggleButton.OnClickListener() {
 
                 @Override
@@ -113,42 +145,66 @@ public class ButtonStore {
     }
 
     private void toggleDriveButtonStates(ToggleButton tb) {
-        Map<String, ToggleButton> buttons = new HashMap<>();
+        Map<Integer, ToggleButton> buttons = new HashMap<>();
+
         driveButtons.forEach((k, v) -> {
-            buttons.put(k, (ToggleButton) v);
+            buttons.put(v.getId(), (ToggleButton) v);
         });
 
-        String text = String.valueOf(tb.getTextOff());
-        switch (text) {
-            case FAIRWAY:
-                buttons.remove(text);
-                break;
-            case LEFT:
-            case RIGHT:
-                removeButtons(buttons, text,  TREE, OB, PEN, BUNKER, SHORT);
-                break;
-            case BUNKER:
-            case OB:
-            case PEN:
-            case TREE:
-                removeButtons(buttons, text, LEFT, RIGHT);
-                break;
+        int id = tb.getId();
+        if (id == D_LEFT.getId() || id == D_RIGHT.getId()) {
+            removeButtons(buttons, D_TREE, D_OB, D_PENALTY, D_BUNKER);
+        } else if (id == D_BUNKER.getId() || id == D_OB.getId() || id == D_PENALTY.getId() || id == D_TREE.getId()) {
+            removeButtons(buttons, D_LEFT, D_RIGHT);
+        } else {
+            buttons.clear();
+        }
+        
+        approachButtons.forEach((k, v) -> {
+            buttons.put(v.getId(), (ToggleButton)v);
+        });
+        
+        if (id == A_LEFT.getId() || id == A_RIGHT.getId()) {
+            removeButtons(buttons, approachDistances, A_TREE, A_OB, A_PENALTY, A_BUNKER);
+        } else if (id == A_BUNKER.getId() || id == A_OB.getId() || id == A_PENALTY.getId() || id == A_TREE.getId()) {
+            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_SHORT, A_GIR);
+        } else if (id == A_GIR.getId()) {
+            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_PENALTY, A_BUNKER, A_TREE, A_MIDDLE, A_LONG, A_SHORT, A_FRINGE);
+        } else if (id == A_SHORT.getId() || id == A_MIDDLE.getId() || id == A_LONG.getId() || id == A_FRINGE.getId()) {
+            removeButtons(buttons, approachDistances, A_RIGHT, A_BUNKER, A_PENALTY, A_GIR);
+        } else if (id == A_FORTY.getId() || id == A_EIGHTY.getId() || id == A_ONE_TWENTY.getId() ||
+                id == A_ONE_SIXTY.getId() || id == A_ONE_SIXTY_PLUS.getId()) {
+            removeButtons(buttons, approachOutcomes);
+        } else if (id == A_GREEN.getId()) {
+            removeButtons(buttons, approachDistances);
+        }
+
 //            case SHORT:
 //                buttons.remove(text);
 //                break;
-        }
+
+                buttons.remove(id);
+
         turnOffToggleButtons(buttons);
 
     }
 
 
-    private void removeButtons(Map<String, ToggleButton> buttons, String... names) {
+    private void removeButtons(Map<Integer, ToggleButton> buttons, ShotOutcome... names) {
         System.out.println("remove the buttons");
-        Arrays.stream(names).forEach(buttons::remove);
+        Arrays.stream(names).forEach(so -> {
+            buttons.remove(so.getId());
+        });
+    }
+
+    private void removeButtons(Map<Integer, ToggleButton> buttons, ShotOutcome[] shotOutcomes, ShotOutcome... names) {
+        ShotOutcome[] newArray = Stream.concat(Arrays.stream(shotOutcomes), Arrays.stream(names))
+                .toArray(ShotOutcome[]::new);
+        removeButtons(buttons, newArray);
     }
 
 
-    private void turnOffToggleButtons(Map<String, ToggleButton> buttons) {
+    private void turnOffToggleButtons(Map<Integer, ToggleButton> buttons) {
         buttons.forEach((k, v) -> v.setChecked(false));
     }
 

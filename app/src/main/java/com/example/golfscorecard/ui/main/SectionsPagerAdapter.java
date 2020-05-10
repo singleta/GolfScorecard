@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    public static final int HOLES = 2;
+    public static final int HOLES = 18;
     private List<HoleScoreFragment> holePages = new ArrayList<>(HOLES);
     private HoleScoreFragment holeScoreFragment = new HoleScoreFragment();
 

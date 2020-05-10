@@ -42,11 +42,10 @@ import java.util.Map;
  */
 public class HoleScoreFragment extends Fragment {
 
-    public static final int SHORT = R.id.putt0;
-    public static final int MEDIUM = R.id.putt1;
-    public static final int LONG = R.id.putt2;
-    public static final int HUGE = R.id.putt3;
     public static final int TEE = 1;
+    public static final int DRIVE = 2;
+    public static final int APPROACH = 3;
+    public static final int PUTTING = 4;
 
     ButtonStore buttonStore;
 
@@ -93,9 +92,9 @@ public class HoleScoreFragment extends Fragment {
 
     private void placeButtons(View view) {
         placeButtons(view, buttonStore.getTeeButtons(), TEE);
-        placeButtons(view, buttonStore.getDriveButtons(), R.id.drive);
-        placeButtons(view, buttonStore.getApproachButtons(), R.id.approach);
-        placeButtons(view, buttonStore.getPuttButtons(), R.id.putts);
+        placeButtons(view, buttonStore.getDriveButtons(), DRIVE);
+        placeButtons(view, buttonStore.getApproachButtons(), APPROACH);
+        placeButtons(view, buttonStore.getPuttButtons(), PUTTING);
         addTotalFields(view);
     }
 
@@ -104,15 +103,15 @@ public class HoleScoreFragment extends Fragment {
         int id = 0;
         int label = 0;
         switch (section) {
-            case R.id.drive:
+            case DRIVE:
                 id = R.id.driveTableLayout;
                 label = R.string.drive;
                 break;
-            case R.id.approach:
+            case APPROACH:
                 id = R.id.approachTableLayout;
                 label = R.string.approach;
                 break;
-            case R.id.putts:
+            case PUTTING:
                 id = R.id.puttsTableLayout;
                 label = R.string.putting;
                 break;
@@ -131,7 +130,7 @@ public class HoleScoreFragment extends Fragment {
         tr.addView(rowLabel);
         for (Map.Entry<String, View> es : buttons.entrySet()) {
             if (tr.getChildCount() == 5 ||
-                    es.getKey().equals(ShotOutcome.FORTY.getOff()) ||
+                    es.getKey().equals(ShotOutcome.A_FORTY.name()) ||
                     es.getKey().equals(PuttLength.SHORT.getPuttName())) {
                 tr = new TableRow(layout.getContext());
                 layout.addView(tr);

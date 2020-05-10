@@ -29,8 +29,10 @@ import com.example.golfscorecard.ui.main.SectionsPagerAdapter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,16 +67,18 @@ public class MainActivity extends AppCompatActivity {
         saveHoleData = new SaveHoleData(holePages);
         List<HoleDetails> allHoles = saveHoleData.saveData();
 
-        LocalDate date = LocalDate.now();
-        String filename = R.string.app_name + date.toString();
-        try (FileOutputStream fos = this.openFileOutput(filename, Context.MODE_PRIVATE)) {
-            for (HoleDetails h : allHoles) {
-                fos.write(h.toString().getBytes());
+        String filename = getFilesDir() + "/" + "GolfScorecard" + LocalDate.now().toString() + ".csv";
+        System.out.println("File dir: " + getFilesDir());
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream(filename)))
+        {
+                for (HoleDetails h : allHoles) {
+                    System.out.println("writing filename: " + filename + h.toString());
+                    pw.println(h.toString());
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-
 }

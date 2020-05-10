@@ -3,17 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/section_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_width="222dp"
+        android:layout_height="19dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         tools:layout_constraintLeft_creator="1"
@@ -22,26 +20,26 @@
 
     <TableLayout
         android:id="@+id/teeLayout"
-        android:layout_width="415dp"
+        android:layout_width="match_parent"
         android:layout_height="63dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@+id/tableLayout"
-        tools:layout_editor_absoluteX="-6dp"></TableLayout>
+        app:layout_constraintStart_toEndOf="@id/section_label"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"/>
 
     <TableLayout
         android:id="@+id/driveTableLayout"
-        android:layout_width="414dp"
-        android:layout_height="122dp"
+        android:layout_width="match_parent"
+        android:layout_height="111dp"
         android:layout_marginTop="52dp"
         android:shrinkColumns="*"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/section_label">
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout">
 
     </TableLayout>
 
     <TableLayout
         android:id="@+id/approachTableLayout"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="202dp"
         android:shrinkColumns="*"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +50,7 @@
 
     <TableLayout
         android:id="@+id/puttsTableLayout"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="90dp"
         android:shrinkColumns="*"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,11 +60,11 @@
 
     <LinearLayout
         android:id="@+id/totalsLayout"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="62dp"
         android:layout_marginTop="1dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/puttsTableLayout"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/puttsTableLayout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

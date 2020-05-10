@@ -8,24 +8,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum ShotOutcome {
-    LEFT(R.id.driveLeft,"Left", "L"),
-    FAIRWAY(R.id.driveFairway,"Fair", "F"),
-    RIGHT(R.id.driveRight,"Right", "R"),
-    BUNKER(R.id.approachBunker,"Bunker", "B"),
-    TREE(R.id.driveTree,"Tree", "T"),
-    OB(R.id.driveOB,"OB", "OB"),
-    GIR(R.id.approachHitGreen,"GIR", "GIR"),
-    GREEN(R.id.green,"Green", "X"),
-    PENALTY(R.id.drivePenalty,"Pen", "P"),
-    SHORT(R.id.approachShort,"Short", "S"),
-    MIDDLE(R.id.approachMiddle,"Middle", "M"),
-    LONG(R.id.approachLong,"Long", "L"),
-    FRINGE(R.id.approachFringe,"Fringe", "F"),
-    FORTY(R.id.approach40,"0-40", "40"),
-    EIGHTY(R.id.approach80,"40-80", "80"),
-    ONE_TWENTY(R.id.approach120,"80-120", "120"),
-    ONE_SIXTY(R.id.approach160,"120-160", "160"),
-    ONE_SIXTY_PLUS(R.id.approach160Plus, "160+", "160+");
+    D_LEFT(R.string.dLeft, R.string.leftOff, R.string.leftOn),
+    D_FAIRWAY(R.string.dFairway, R.string.fairwayOff, R.string.fairwayOn),
+    D_RIGHT(R.string.dRight, R.string.rightOff, R.string.rightOn),
+    D_BUNKER(R.string.dSand, R.string.sandOff, R.string.sandOn),
+    D_TREE(R.string.dTree, R.string.treeOff, R.string.treeOn),
+    D_OB(R.string.dOB, R.string.obOff, R.string.obOn),
+    D_PENALTY(R.string.dPenalty, R.string.penaltyOff, R.string.penaltyOn),
+    D_SHORT(R.string.dShort, R.string.shortOff, R.string.shortOn),
+    A_LEFT(R.string.aLeft, R.string.leftOff, R.string.leftOn),
+    A_RIGHT(R.string.aRight, R.string.rightOff, R.string.rightOn),
+    A_BUNKER(R.string.aSand, R.string.sandOff, R.string.sandOn),
+    A_TREE(R.string.aTree, R.string.treeOff, R.string.treeOn),
+    A_OB(R.string.aOB, R.string.obOff, R.string.obOn),
+    A_GIR(R.string.gir, R.string.girOff, R.string.girOn),
+    A_GREEN(R.string.green, R.string.greenOff, R.string.greenOn),
+    A_PENALTY(R.string.aPenalty, R.string.penaltyOff, R.string.penaltyOn),
+    A_SHORT(R.string.aShort, R.string.shortOff, R.string.shortOn),
+    A_MIDDLE(R.string.middle, R.string.middleOff, R.string.middleOn),
+    A_LONG(R.string.longApproach, R.string.longOff, R.string.longOn),
+    A_FRINGE(R.string.fringe, R.string.fringeOff, R.string.fringeOn),
+    A_FORTY(R.string.approach40off, R.string.approach40off, R.string.approach40on),
+    A_EIGHTY(R.string.approach80off, R.string.approach80off, R.string.approach80on),
+    A_ONE_TWENTY(R.string.approach120off, R.string.approach120off, R.string.approach120on),
+    A_ONE_SIXTY(R.string.approach160off, R.string.approach160off, R.string.approach160on),
+    A_ONE_SIXTY_PLUS(R.string.approach160PlusOff, R.string.approach160PlusOff, R.string.approach160PlusOn);
 
 //    D_LEFT(R.id.driveLeft,"Left", "L"),
 //    D_FAIRWAY(R.id.driveFairway,"Fair", "F"),
@@ -48,22 +55,34 @@ public enum ShotOutcome {
 
 
     private int id;
-    private String off;
-    private String on;
+    private int off;
+    private int on;
 
-    public static ShotOutcome[] approachOnly = new ShotOutcome[]{GREEN, GIR, MIDDLE, LONG, FRINGE, FORTY, EIGHTY, ONE_TWENTY, ONE_SIXTY, ONE_SIXTY_PLUS};
+    public static ShotOutcome[] approachOnly  = new ShotOutcome[]{A_LEFT, A_RIGHT, A_BUNKER, A_TREE,
+            A_OB, A_GREEN, A_GIR, A_PENALTY, A_SHORT, A_MIDDLE, A_LONG, A_FRINGE, A_FORTY, A_EIGHTY,
+            A_ONE_TWENTY, A_ONE_SIXTY, A_ONE_SIXTY_PLUS};
 
-    ShotOutcome(int id, String off, String on) {
+    public static ShotOutcome[] driveOnly = new ShotOutcome[] {D_LEFT, D_FAIRWAY, D_RIGHT, D_BUNKER,
+            D_TREE, D_OB, D_PENALTY, D_SHORT};
+
+    public static ShotOutcome[] approachDistances = new ShotOutcome[]{ A_FORTY,  A_EIGHTY,  A_ONE_TWENTY,
+            A_ONE_SIXTY,  A_ONE_SIXTY_PLUS};
+
+    public static ShotOutcome[] approachOutcomes = new ShotOutcome[]{A_LEFT, A_RIGHT, A_BUNKER, A_TREE,
+            A_OB, A_GREEN, A_GIR, A_PENALTY, A_SHORT, A_MIDDLE, A_LONG, A_FRINGE};
+
+
+    ShotOutcome(int id, int off, int on) {
         this.id = id;
         this.off = off;
         this.on = on;
     }
 
-    public String getOff() {
+    public int getOff() {
         return off;
     }
 
-    public String getOn() {
+    public int getOn() {
         return on;
     }
 
@@ -72,28 +91,11 @@ public enum ShotOutcome {
     }
 
     public static List<ShotOutcome> getApproachResults () {
-
-        List<ShotOutcome> approachResults = new ArrayList<>();
-        // Add all the buttons then remove the unwanted ones
-        approachResults.addAll(Arrays.stream(ShotOutcome.values()).collect(Collectors.toList()));
-        approachResults.remove(FAIRWAY);
-        return approachResults;
+        return Arrays.stream(approachOnly).collect(Collectors.toList());
     }
 
     public static List<ShotOutcome> getDriveResults () {
-
-        List<ShotOutcome> driveResults = new ArrayList<>();
-        // Add all the buttons then remove the unwanted ones
-        driveResults.addAll(Arrays.stream(ShotOutcome.values()).collect(Collectors.toList()));
-        for (ShotOutcome sr : approachOnly ) {
-            driveResults.remove(sr);
-
-        }
-
-        return driveResults;
+        return Arrays.stream(driveOnly).collect(Collectors.toList());
     }
 
-    public static ShotOutcome[] getExclusiveApproachButtonNames() {
-        return approachOnly;
-    }
 }
