@@ -156,6 +156,8 @@ public class ButtonStore {
             removeButtons(buttons, D_TREE, D_OB, D_PENALTY, D_BUNKER);
         } else if (id == D_BUNKER.getId() || id == D_OB.getId() || id == D_PENALTY.getId() || id == D_TREE.getId()) {
             removeButtons(buttons, D_LEFT, D_RIGHT);
+        } else if (id == D_FAIRWAY.getId()) {
+            removeButtons(buttons);
         } else {
             buttons.clear();
         }
