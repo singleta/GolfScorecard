@@ -1,8 +1,7 @@
-package com.example.golfscorecard.ui.main;
+package com.example.golfscorecard.shots;
 
 import com.example.golfscorecard.R;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

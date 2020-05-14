@@ -1,24 +1,18 @@
 package com.example.golfscorecard.ui.main;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.AttributeSet;
-import android.util.Xml;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -27,14 +21,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.golfscorecard.R;
-import com.example.golfscorecard.buttons.PuttButton;
+import com.example.golfscorecard.buttons.ButtonStore;
+import com.example.golfscorecard.shots.PuttLength;
+import com.example.golfscorecard.shots.ShotOutcome;
 
-import org.xmlpull.v1.XmlPullParser;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

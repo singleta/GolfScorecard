@@ -7,9 +7,9 @@ import android.util.Xml;
 import android.view.View;
 
 import android.widget.ToggleButton;
-import com.example.golfscorecard.ui.main.ButtonStore;
+import com.example.golfscorecard.buttons.ButtonStore;
 
-import com.example.golfscorecard.ui.main.ShotOutcome;
+import com.example.golfscorecard.shots.ShotOutcome;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

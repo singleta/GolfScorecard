@@ -1,4 +1,4 @@
-package com.example.golfscorecard.ui.main;
+package com.example.golfscorecard.shots;
 
 import com.example.golfscorecard.R;
 

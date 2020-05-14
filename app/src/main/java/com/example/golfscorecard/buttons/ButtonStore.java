@@ -1,7 +1,6 @@
-package com.example.golfscorecard.ui.main;
+package com.example.golfscorecard.buttons;
 
 import android.graphics.Color;
-import android.graphics.PathEffect;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -10,43 +9,32 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.golfscorecard.R;
-import com.example.golfscorecard.buttons.PuttButton;
+import com.example.golfscorecard.shots.PuttLength;
+import com.example.golfscorecard.shots.ShotOutcome;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Stream;
 
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_BUNKER;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_EIGHTY;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_FORTY;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_FRINGE;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_GIR;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_GREEN;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_LEFT;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_LONG;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_MIDDLE;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_OB;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_ONE_SIXTY;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_ONE_SIXTY_PLUS;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_ONE_TWENTY;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_PENALTY;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_RIGHT;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_SHORT;
-import static com.example.golfscorecard.ui.main.ShotOutcome.A_TREE;
-import static com.example.golfscorecard.ui.main.ShotOutcome.D_BUNKER;
-import static com.example.golfscorecard.ui.main.ShotOutcome.D_FAIRWAY;
-import static com.example.golfscorecard.ui.main.ShotOutcome.D_LEFT;
-import static com.example.golfscorecard.ui.main.ShotOutcome.D_OB;
-import static com.example.golfscorecard.ui.main.ShotOutcome.D_PENALTY;
-import static com.example.golfscorecard.ui.main.ShotOutcome.D_RIGHT;
-import static com.example.golfscorecard.ui.main.ShotOutcome.D_SHORT;
-import static com.example.golfscorecard.ui.main.ShotOutcome.D_TREE;
-import static com.example.golfscorecard.ui.main.ShotOutcome.approachDistances;
-import static com.example.golfscorecard.ui.main.ShotOutcome.approachOutcomes;
+import static com.example.golfscorecard.shots.ShotOutcome.A_BUNKER;
+import static com.example.golfscorecard.shots.ShotOutcome.A_LEFT;
+import static com.example.golfscorecard.shots.ShotOutcome.A_LONG;
+import static com.example.golfscorecard.shots.ShotOutcome.A_MIDDLE;
+import static com.example.golfscorecard.shots.ShotOutcome.A_OB;
+import static com.example.golfscorecard.shots.ShotOutcome.A_PENALTY;
+import static com.example.golfscorecard.shots.ShotOutcome.A_RIGHT;
+import static com.example.golfscorecard.shots.ShotOutcome.A_SHORT;
+import static com.example.golfscorecard.shots.ShotOutcome.A_TREE;
+import static com.example.golfscorecard.shots.ShotOutcome.D_BUNKER;
+import static com.example.golfscorecard.shots.ShotOutcome.D_FAIRWAY;
+import static com.example.golfscorecard.shots.ShotOutcome.D_LEFT;
+import static com.example.golfscorecard.shots.ShotOutcome.D_OB;
+import static com.example.golfscorecard.shots.ShotOutcome.D_PENALTY;
+import static com.example.golfscorecard.shots.ShotOutcome.D_RIGHT;
+import static com.example.golfscorecard.shots.ShotOutcome.D_SHORT;
+import static com.example.golfscorecard.shots.ShotOutcome.D_TREE;
 
 public class ButtonStore {
 
@@ -59,6 +47,10 @@ public class ButtonStore {
     private int redId;
     private int whiteId;
     private int yellowId;
+
+    public static final String RED = "red";
+    public static final String WHITE = "white";
+    public static final String YELLOW = "yellow";
     int randomId = new Random().nextInt();
 
     private static String ZERO = "0 Putts";
@@ -85,17 +77,12 @@ public class ButtonStore {
     public static final int ALONG = A_LONG.getId();
 
     private View view;
+    private ButtonActions buttonActions;
 
     public ButtonStore(View view) {
         this.view = view;
+        buttonActions = new ButtonActions(view);
         setupButtons();
-    }
-
-    private static void setPuttsToZero(String k, View v) {
-        PuttButton pb = ((PuttButton) v);
-        pb.setText("0");
-        pb.performLongClick();
-
     }
 
 
@@ -137,78 +124,13 @@ public class ButtonStore {
 
                 @Override
                 public void onClick(View view) {
-                    toggleDriveButtonStates(toggleButton);
+                    buttonActions.toggleButtonStates(toggleButton, driveButtons, approachButtons);
                 }
             });
         });
         return toggleButtons;
     }
 
-    private void toggleDriveButtonStates(ToggleButton tb) {
-        Map<Integer, ToggleButton> buttons = new HashMap<>();
-
-        driveButtons.forEach((k, v) -> {
-            buttons.put(v.getId(), (ToggleButton) v);
-        });
-
-        int id = tb.getId();
-        if (id == D_LEFT.getId() || id == D_RIGHT.getId()) {
-            removeButtons(buttons, D_TREE, D_OB, D_PENALTY, D_BUNKER);
-        } else if (id == D_BUNKER.getId() || id == D_OB.getId() || id == D_PENALTY.getId() || id == D_TREE.getId()) {
-            removeButtons(buttons, D_LEFT, D_RIGHT);
-        } else if (id == D_FAIRWAY.getId()) {
-            removeButtons(buttons);
-        } else {
-            buttons.clear();
-        }
-        
-        approachButtons.forEach((k, v) -> {
-            buttons.put(v.getId(), (ToggleButton)v);
-        });
-        
-        if (id == A_LEFT.getId() || id == A_RIGHT.getId()) {
-            removeButtons(buttons, approachDistances, A_TREE, A_OB, A_PENALTY, A_BUNKER);
-        } else if (id == A_BUNKER.getId() || id == A_OB.getId() || id == A_PENALTY.getId() || id == A_TREE.getId()) {
-            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_SHORT, A_GIR);
-        } else if (id == A_GIR.getId()) {
-            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_PENALTY, A_BUNKER, A_TREE, A_MIDDLE, A_LONG, A_SHORT, A_FRINGE);
-        } else if (id == A_SHORT.getId() || id == A_MIDDLE.getId() || id == A_LONG.getId() || id == A_FRINGE.getId()) {
-            removeButtons(buttons, approachDistances, A_RIGHT, A_BUNKER, A_PENALTY, A_GIR);
-        } else if (id == A_FORTY.getId() || id == A_EIGHTY.getId() || id == A_ONE_TWENTY.getId() ||
-                id == A_ONE_SIXTY.getId() || id == A_ONE_SIXTY_PLUS.getId()) {
-            removeButtons(buttons, approachOutcomes);
-        } else if (id == A_GREEN.getId()) {
-            removeButtons(buttons, approachDistances);
-        }
-
-//            case SHORT:
-//                buttons.remove(text);
-//                break;
-
-                buttons.remove(id);
-
-        turnOffToggleButtons(buttons);
-
-    }
-
-
-    private void removeButtons(Map<Integer, ToggleButton> buttons, ShotOutcome... names) {
-        System.out.println("remove the buttons");
-        Arrays.stream(names).forEach(so -> {
-            buttons.remove(so.getId());
-        });
-    }
-
-    private void removeButtons(Map<Integer, ToggleButton> buttons, ShotOutcome[] shotOutcomes, ShotOutcome... names) {
-        ShotOutcome[] newArray = Stream.concat(Arrays.stream(shotOutcomes), Arrays.stream(names))
-                .toArray(ShotOutcome[]::new);
-        removeButtons(buttons, newArray);
-    }
-
-
-    private void turnOffToggleButtons(Map<Integer, ToggleButton> buttons) {
-        buttons.forEach((k, v) -> v.setChecked(false));
-    }
 
 
     private void setupTeeButtons() {
@@ -234,10 +156,11 @@ public class ButtonStore {
                     yellowId = teeImageButton.getId();
                     break;
             }
+            teeImageButton.setBackgroundColor(Color.TRANSPARENT);
             teeImageButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    toggleTeeVisibility(view);
+                    toggleTeeVisibility(view, getTeeIds());
 
                     Toast.makeText(view.getContext(), "tee selected", Toast.LENGTH_SHORT).show();
                 }
@@ -248,7 +171,7 @@ public class ButtonStore {
             teeImageButton.setOnLongClickListener(new Button.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    toggleTeeVisibility(view);
+                    toggleTeeVisibility(view, getTeeIds());
                     Toast.makeText(view.getContext(), "tee de-selected", Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -256,6 +179,11 @@ public class ButtonStore {
 
             teeButtons.put(tee.getTeeColour(), teeImageButton);
         }
+    }
+
+    private void toggleTeeVisibility(View view, Map<String, Integer> teeIds) {
+
+        buttonActions.toggleTeeVisibility(view, teeIds);
     }
 
     private void setupPuttButtons() {
@@ -267,7 +195,7 @@ public class ButtonStore {
                     @Override
                     public void onClick(View view) {
                         totalPuttsView.setText("0");
-                        resetPuttButtons();
+                        buttonActions.resetPuttButtons(puttButtons);
                         b.setText(puttLength.getPuttName());
                     }
                 });
@@ -335,33 +263,12 @@ public class ButtonStore {
 
     }
 
-    private void resetPuttButtons() {
-        puttButtons.forEach(ButtonStore::setPuttsToZero);
-    }
-
-    private void toggleTeeVisibility(View view) {
-        if (view.getId() == redId) {
-            changeVisibility(whiteId, yellowId);
-        } else if (view.getId() == whiteId) {
-            changeVisibility(redId, yellowId);
-        } else {
-            changeVisibility(redId, whiteId);
-        }
-    }
-
-    private void changeVisibility(int id1, int id2) {
-        View v1 = view.findViewById(id1);
-        View v2 = view.findViewById(id2);
-        if (v1.getVisibility() == View.VISIBLE) {
-            v1.setVisibility(View.INVISIBLE);
-        } else {
-            v1.setVisibility(View.VISIBLE);
-        }
-        if (v2.getVisibility() == View.VISIBLE) {
-            v2.setVisibility(View.INVISIBLE);
-        } else {
-            v2.setVisibility(View.VISIBLE);
-        }
+    private Map<String, Integer> getTeeIds() {
+        Map<String, Integer> ids = new HashMap<>();
+        ids.put(RED, getRedId());
+        ids.put(WHITE, getWhiteId());
+        ids.put(YELLOW, getYellowId());
+        return  ids;
     }
 
     public Map<String, View> getTeeButtons() {
@@ -426,6 +333,18 @@ public class ButtonStore {
 
     public TextView getTotalPuttsView() {
         return totalPuttsView;
+    }
+
+    public int getRedId() {
+        return redId;
+    }
+
+    public int getWhiteId() {
+        return whiteId;
+    }
+
+    public int getYellowId() {
+        return yellowId;
     }
 
     private int shortPutts;

@@ -1,9 +1,8 @@
 package com.example.golfscorecard.buttons;
 
 import android.content.Context;
-import android.widget.Button;
 
-import com.example.golfscorecard.ui.main.PuttLength;
+import com.example.golfscorecard.shots.PuttLength;
 
 import androidx.appcompat.widget.AppCompatButton;
 

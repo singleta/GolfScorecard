@@ -1,10 +1,10 @@
 package com.example.golfscorecard;
 
 import android.content.Context;
-import android.view.View;
+
 import com.example.golfscorecard.buttons.PuttButton;
 import com.example.golfscorecard.ui.main.HoleScoreFragment;
-import com.example.golfscorecard.ui.main.PuttLength;
+import com.example.golfscorecard.shots.PuttLength;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

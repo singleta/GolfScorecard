@@ -1,7 +1,5 @@
 package com.example.golfscorecard;
 
-import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -13,13 +11,10 @@ import android.widget.ToggleButton;
 
 import com.example.golfscorecard.buttons.PuttButton;
 import com.example.golfscorecard.ui.main.HoleScoreFragment;
-import com.example.golfscorecard.ui.main.PuttLength;
+import com.example.golfscorecard.shots.PuttLength;
 
-import java.io.FileOutputStream;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 

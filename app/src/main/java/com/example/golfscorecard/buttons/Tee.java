@@ -1,4 +1,4 @@
-package com.example.golfscorecard.ui.main;
+package com.example.golfscorecard.buttons;
 
 public enum Tee {
     RED("Red"), WHITE("White"), YELLOW("Yellow");
