@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -22,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.golfscorecard.R;
 import com.example.golfscorecard.buttons.ButtonStore;
+import com.example.golfscorecard.databinding.FragmentHoleTemplateBinding;
 import com.example.golfscorecard.shots.PuttLength;
 import com.example.golfscorecard.shots.ShotOutcome;
 
@@ -36,6 +38,7 @@ public class HoleScoreFragment extends Fragment {
     public static final int DRIVE = 2;
     public static final int APPROACH = 3;
     public static final int PUTTING = 4;
+    Spinner scoreSelector;
 
     ButtonStore buttonStore;
 
@@ -67,14 +70,7 @@ public class HoleScoreFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_hole_template, container, false);
-        final TextView textView = root.findViewById(R.id.section_label);
-        pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
+//        View root = FragmentHoleTemplateBinding.inflate(inflater).constraintLayout;
         buttonStore = new ButtonStore(root);
         placeButtons(root);
         return root;
@@ -112,16 +108,20 @@ public class HoleScoreFragment extends Fragment {
         }
         TableLayout layout = view.findViewById(id);
         TableRow tr = new TableRow(layout.getContext());
-        tr.setGravity(Gravity.RIGHT);
+        if (section == TEE) {
+            tr.setGravity(Gravity.END);
+        }
         layout.addView(tr);
         TextView rowLabel = new TextView(layout.getContext());
         rowLabel.setText(label);
+//        rowLabel.setTextAppearance(R.style.TextAppearance_AppCompat_Button);
         tr.setLayoutParams(new TableRow.LayoutParams(0));
         tr.addView(rowLabel);
         for (Map.Entry<String, View> es : buttons.entrySet()) {
             if (tr.getChildCount() == 5 ||
                     es.getKey().equals(ShotOutcome.A_FORTY.name()) ||
-                    es.getKey().equals(PuttLength.SHORT.getPuttName())) {
+                    es.getKey().equals(ShotOutcome.A_TWO_HUNDRED.name()) ||
+                    es.getKey().equals(getString(R.string.puttZero))) {
                 tr = new TableRow(layout.getContext());
                 layout.addView(tr);
             }
@@ -134,11 +134,14 @@ public class HoleScoreFragment extends Fragment {
         TextView totalPuttsLabel = new TextView(v.getContext());
         totalPuttsLabel.setText(getString(R.string.totalPutts));
         TextView totalPutts = buttonStore.getTotalPuttsView();
-
+        totalPutts.setMinWidth(50);
+        totalPutts.setGravity(Gravity.CENTER);
+        totalPutts.setTextSize(18);
+        totalPutts.setText("0");
         TextView totalScore = new TextView(v.getContext());
         totalScore.setText(getString(R.string.totalScore));
-        totalScore.setGravity(Gravity.RIGHT);
-        Spinner scoreSelector = new Spinner(v.getContext());
+        totalScore.setGravity(Gravity.END);
+        scoreSelector = new Spinner(v.getContext());
         // Create an ArrayAdapter using the string array and a default spinner layout
 //        ArrayAdapter<Integer> adapter = ArrayAdapter.createFromResource(this,
 //                R.array.planets_array, android.R.layout.simple_spinner_item);
@@ -149,13 +152,20 @@ public class HoleScoreFragment extends Fragment {
         scoreSelector.setAdapter(adapter);
         EditText tScore = new EditText(v.getContext());
         tScore.setInputType(InputType.TYPE_CLASS_NUMBER);
-        tScore.setGravity(Gravity.RIGHT);
+        tScore.setGravity(Gravity.END);
         LinearLayout layout = v.findViewById(R.id.totalsLayout);
+        Space space = new Space(getContext());
+        space.setMinimumWidth(200);
+        layout.addView(space);
         layout.addView(totalPuttsLabel);
         layout.addView(totalPutts);
         layout.addView(totalScore);
         layout.addView(scoreSelector);
         layout.addView(tScore);
 //        v.add
+    }
+
+    public void changeHoleScore(int score) {
+        scoreSelector.setSelection(scoreSelector.getSelectedItemPosition() + score);
     }
 }

@@ -9,14 +9,21 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.golfscorecard.R;
+import com.example.golfscorecard.databinding.FragmentHoleTemplateBinding;
 import com.example.golfscorecard.shots.PuttLength;
 import com.example.golfscorecard.shots.ShotOutcome;
+import com.example.golfscorecard.ui.main.HoleScoreFragment;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import static com.example.golfscorecard.shots.ShotOutcome.A_BUNKER;
 import static com.example.golfscorecard.shots.ShotOutcome.A_LEFT;
@@ -41,12 +48,12 @@ public class ButtonStore {
     private Map<String, View> driveButtons = new LinkedHashMap<>();
     private Map<String, View> approachButtons = new LinkedHashMap<>();
     private Map<String, View> puttButtons = new LinkedHashMap<>();
-    private Map<String, View> teeButtons = new LinkedHashMap<>();
+    private static Map<String, View> teeButtons = new LinkedHashMap<>();
     private TextView totalPuttsView;
     private int totalPutts;
-    private int redId;
-    private int whiteId;
-    private int yellowId;
+    private static int redId;
+    private static int whiteId;
+    private static int yellowId;
 
     public static final String RED = "red";
     public static final String WHITE = "white";
@@ -78,17 +85,20 @@ public class ButtonStore {
 
     private View view;
     private ButtonActions buttonActions;
+    private static View teeView;
 
     public ButtonStore(View view) {
         this.view = view;
         buttonActions = new ButtonActions(view);
+        teeView = view;
+        setupTeeButtons(teeView);
         setupButtons();
     }
 
 
     private void setupButtons() {
 
-        setupTeeButtons();
+//        setupTeeButtons();
         setupPuttButtons();
         setupDriveButtons();
         setupApproachButtons();
@@ -133,58 +143,61 @@ public class ButtonStore {
 
 
 
-    private void setupTeeButtons() {
+    private static void setupTeeButtons(View v) {
         for (Tee tee : Tee.values()) {
-            ImageButton teeImageButton = new ImageButton(view.getContext());
+            ImageButton teeImageButton = new ImageButton(v.getContext());
+//            int id = View.generateViewId();
             switch (tee) {
                 case RED:
                     teeImageButton.setImageResource(R.drawable.redtee);
                     teeImageButton.setTooltipText("Winter/Red");
-                    teeImageButton.setId(randomId);
-                    redId = teeImageButton.getId();
+                    redId = R.id.redTee;
+                    teeImageButton.setId(redId);
                     break;
                 case WHITE:
                     teeImageButton.setImageResource(R.drawable.whitetee);
                     teeImageButton.setTooltipText("White");
-                    teeImageButton.setId(randomId + 1);
-                    whiteId = teeImageButton.getId();
+                    whiteId = R.id.whiteTee;
+                    teeImageButton.setId(whiteId);
                     break;
                 case YELLOW:
                     teeImageButton.setImageResource(R.drawable.yellowtee);
                     teeImageButton.setTooltipText("Yellow");
-                    teeImageButton.setId(randomId + 2);
-                    yellowId = teeImageButton.getId();
+                    yellowId = R.id.yellowTee;
+                    teeImageButton.setId(yellowId);
                     break;
             }
+            teeImageButton.setTag(tee.getTeeColour());
+//            teeImageButton.setId(id);
             teeImageButton.setBackgroundColor(Color.TRANSPARENT);
-            teeImageButton.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    toggleTeeVisibility(view, getTeeIds());
-
-                    Toast.makeText(view.getContext(), "tee selected", Toast.LENGTH_SHORT).show();
-                }
-
-
-            });
-
-            teeImageButton.setOnLongClickListener(new Button.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    toggleTeeVisibility(view, getTeeIds());
-                    Toast.makeText(view.getContext(), "tee de-selected", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
+//            teeImageButton.setOnClickListener(new Button.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    toggleTeeVisibility(view);
+//
+//                    Toast.makeText(view.getContext(), "tee selected", Toast.LENGTH_SHORT).show();
+//                }
+//
+//
+//            });
+//
+//            teeImageButton.setOnLongClickListener(new Button.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    toggleTeeVisibility(view);
+//                    Toast.makeText(view.getContext(), "tee de-selected", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                }
+//            });
 
             teeButtons.put(tee.getTeeColour(), teeImageButton);
         }
     }
 
-    private void toggleTeeVisibility(View view, Map<String, Integer> teeIds) {
-
-        buttonActions.toggleTeeVisibility(view, teeIds);
-    }
+//    private static void toggleTeeVisibility(View view) {
+//
+//        buttonActions.toggleTeeVisibility(view);
+//    }
 
     private void setupPuttButtons() {
         for (PuttLength puttLength : PuttLength.values()) {
@@ -259,6 +272,10 @@ public class ButtonStore {
         }
         puttButton.setText(text);
         setTotalPutts(Math.max(getTotalPutts() + i, 0));
+
+//        PagerAdapter adapter = ((ViewPager) view.getParent()).getAdapter();
+//        FragmentStatePagerAdapter fspa = (FragmentStatePagerAdapter)adapter;
+//        Fragment currentFragment = fspa.getItem(0);
         totalPuttsView.setText(String.valueOf(getTotalPutts()));
 
     }

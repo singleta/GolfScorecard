@@ -31,7 +31,8 @@ public enum ShotOutcome {
     A_EIGHTY(R.string.approach80off, R.string.approach80off, R.string.approach80on),
     A_ONE_TWENTY(R.string.approach120off, R.string.approach120off, R.string.approach120on),
     A_ONE_SIXTY(R.string.approach160off, R.string.approach160off, R.string.approach160on),
-    A_ONE_SIXTY_PLUS(R.string.approach160PlusOff, R.string.approach160PlusOff, R.string.approach160PlusOn);
+    A_TWO_HUNDRED(R.string.approach200Off, R.string.approach200Off, R.string.approach200On),
+    A_TWO_HUNDRED_PLUS(R.string.approach200PlusOff, R.string.approach200PlusOff, R.string.approach200PlusOn);
 
 //    D_LEFT(R.id.driveLeft,"Left", "L"),
 //    D_FAIRWAY(R.id.driveFairway,"Fair", "F"),
@@ -59,13 +60,13 @@ public enum ShotOutcome {
 
     public static ShotOutcome[] approachOnly  = new ShotOutcome[]{A_LEFT, A_RIGHT, A_BUNKER, A_TREE,
             A_OB, A_GREEN, A_GIR, A_PENALTY, A_SHORT, A_MIDDLE, A_LONG, A_FRINGE, A_FORTY, A_EIGHTY,
-            A_ONE_TWENTY, A_ONE_SIXTY, A_ONE_SIXTY_PLUS};
+            A_ONE_TWENTY, A_ONE_SIXTY, A_TWO_HUNDRED, A_TWO_HUNDRED_PLUS};
 
     public static ShotOutcome[] driveOnly = new ShotOutcome[] {D_LEFT, D_FAIRWAY, D_RIGHT, D_BUNKER,
             D_TREE, D_OB, D_PENALTY, D_SHORT};
 
     public static ShotOutcome[] approachDistances = new ShotOutcome[]{ A_FORTY,  A_EIGHTY,  A_ONE_TWENTY,
-            A_ONE_SIXTY,  A_ONE_SIXTY_PLUS};
+            A_ONE_SIXTY,  A_TWO_HUNDRED, A_TWO_HUNDRED_PLUS};
 
     public static ShotOutcome[] approachOutcomes = new ShotOutcome[]{A_LEFT, A_RIGHT, A_BUNKER, A_TREE,
             A_OB, A_GREEN, A_GIR, A_PENALTY, A_SHORT, A_MIDDLE, A_LONG, A_FRINGE};
