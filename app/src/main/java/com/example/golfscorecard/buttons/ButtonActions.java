@@ -80,7 +80,7 @@ public class ButtonActions {
         } else if (id == A_GIR.getId()) {
             removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_PENALTY, A_BUNKER, A_TREE, A_MIDDLE, A_LONG, A_SHORT, A_FRINGE);
         } else if (id == A_SHORT.getId() || id == A_MIDDLE.getId() || id == A_LONG.getId() || id == A_FRINGE.getId()) {
-            removeButtons(buttons, approachDistances, A_RIGHT, A_BUNKER, A_PENALTY, A_GIR);
+            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_BUNKER, A_PENALTY, A_GIR);
         } else if (id == A_FORTY.getId() || id == A_EIGHTY.getId() || id == A_ONE_TWENTY.getId() ||
                 id == A_ONE_SIXTY.getId() || id == A_TWO_HUNDRED.getId() || id == A_TWO_HUNDRED_PLUS.getId()) {
             removeButtons(buttons, approachOutcomes);
