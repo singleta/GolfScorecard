@@ -1,5 +1,6 @@
 package com.example.golfscorecard;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -40,9 +41,13 @@ public class SaveHoleData {
     public List<HoleDetails> saveData() {
         List<HoleDetails> holeDetailsList = new ArrayList<>(18);
         for (HoleScoreFragment holePage : holePages) {
-            saveHoleData(holePage);
-            System.out.println(holeDetails.toString());
-            holeDetailsList.add(holeDetails);
+            if (holePage != null) {
+                saveHoleData(holePage);
+                System.out.println(holeDetails.toString());
+                holeDetailsList.add(holeDetails);
+            } else {
+                System.out.println("hole page is null");
+            }
         }
         return holeDetailsList;
     }
@@ -50,16 +55,24 @@ public class SaveHoleData {
     public void saveHoleData(HoleScoreFragment holeScoreFragment) {
         holeDetails = new HoleDetails();
         holeDetails.setDate(LocalDate.now());
-        holeDetails.setHole((Integer) holeScoreFragment.getArguments().get(ARG_SECTION_NUMBER));
-        holeDetails.setPar(holeDetails.parsByHole[holeDetails.getHole() - 1]);
+        Bundle arguments = holeScoreFragment.getArguments();
+        if (arguments != null) {
+            Object o = arguments.get(ARG_SECTION_NUMBER);
+            if (o instanceof Integer) {
+                holeDetails.setHole((Integer) o);
+            }
+        }
+        holeDetails.setPar(HoleDetails.parsByHole[holeDetails.getHole() - 1]);
         ConstraintLayout cl = (ConstraintLayout) holeScoreFragment.getView();
-        int childCount = cl.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View v = cl.getChildAt(i);
-            if (v instanceof TableLayout) {
-                processTable(v);
-            } else { // It's the totals
-                saveTotal(v);
+        if (cl != null) {
+            int childCount = cl.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View v = cl.getChildAt(i);
+                if (v instanceof TableLayout) {
+                    processTable(v);
+                } else { // It's the totals
+                    saveTotal(v);
+                }
             }
         }
 
@@ -118,6 +131,9 @@ public class SaveHoleData {
                 if (text.contains("0")) {
                     holeDetails.setApproachDistance(text);
                 } else {
+                    if (text.contains("G")) {
+                        holeDetails.setGir("G");
+                    }
                     holeDetails.setApproach(addToStringValues(text, holeDetails.getApproach()));
                 }
                 break;
@@ -127,14 +143,14 @@ public class SaveHoleData {
     private void saveTotal(View view) {
         String text;
         if (view.getId() == R.id.totalsLayout) {
-            LinearLayout layout = (LinearLayout)view;
+            LinearLayout layout = (LinearLayout) view;
             int children = layout.getChildCount();
-            for (int i=0; i<children; i++) {
+            for (int i = 0; i < children; i++) {
                 View v = layout.getChildAt(i);
                 if (v instanceof TextView) {
-                    text = ((TextView) v).getText().toString();
-                    if (!text.equals("") && Character.isDigit(text.charAt(0))) {
-                        holeDetails.setTotalPutts(text);
+                    TextView tv = (TextView) v;
+                    if (tv.getHint() != null && tv.getHint().toString().equals(view.getResources().getString(R.string.totalPutts))) {
+                        holeDetails.setTotalPutts(tv.getText().toString());
                     }
                 } else if (v instanceof Spinner) {
                     text = ((Spinner) v).getSelectedItem().toString();
@@ -144,11 +160,11 @@ public class SaveHoleData {
         }
     }
 
-    private StringBuilder addToStringValues(String text, StringBuilder values) {
+    private String addToStringValues(String text, String values) {
         if (values == null) {
-            values = new StringBuilder(text);
+            values = text;
         } else {
-            values.append(text);
+            values = values.concat(text);
         }
         return values;
     }

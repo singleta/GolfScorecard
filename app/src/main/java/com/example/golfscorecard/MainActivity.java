@@ -1,43 +1,30 @@
 package com.example.golfscorecard;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.golfscorecard.ui.main.HolePage;
 import com.example.golfscorecard.ui.main.HoleScoreFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Environment;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.ToggleButton;
+import android.widget.ImageButton;
 
 import com.example.golfscorecard.ui.main.SectionsPagerAdapter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private SaveHoleData saveHoleData;
+
+    public static int OVERALL_SCORE=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
+        viewPager.setOffscreenPageLimit(17);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -88,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, requiredPermissions, 0);
 
         File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        String filename = file.getPath() + "/" + "GolfScorecard" + LocalDate.now().toString() + ".csv";
+        String filename = file.getPath() + "/" + "GolfScorecard" + LocalDateTime.now().toString() + ".csv";
         System.out.println("File dir: " + getFilesDir());
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(filename)))
         {
@@ -114,4 +104,43 @@ public class MainActivity extends AppCompatActivity {
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message text");
         emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("content:" + filename));
     }
+
+    public int getOverallScore() {
+        int score = 0;
+        for (HoleScoreFragment holeScoreFragment : sectionsPagerAdapter.getHolePages()) {
+            if (holeScoreFragment!=null) {
+                score += holeScoreFragment.getHoleScore();
+            }
+        }
+        return score;
+
+    }
+
+    public static void setOverallScore(int overallScore) {
+        OVERALL_SCORE = overallScore;
+    }
+
+
+//    public void selectTee(View view) {
+//        if (view.getId() == R.id.redTee) {
+//            toggleVisibility(R.id.whiteTee, R.id.yellowTee);
+//        } else if (view.getId() == R.id.whiteTee) {
+//            toggleVisibility(R.id.redTee, R.id.yellowTee);
+//        } else {
+//            toggleVisibility(R.id.whiteTee, R.id.redTee);
+//        }
+//    }
+//
+//    private void toggleVisibility(int tee1, int tee2) {
+//        int[] tees = new int[]{tee1, tee2};
+//        Arrays.stream(tees).forEach(tee -> {
+//
+//        View v = findViewById(tee);
+//        if (v.getVisibility() == View.VISIBLE) {
+//            v.setVisibility(View.INVISIBLE);
+//        } else {
+//            v.setVisibility(View.VISIBLE);
+//        }
+//        });
+//    }
 }

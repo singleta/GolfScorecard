@@ -71,8 +71,9 @@
     <string name="approach200PlusOn">+</string>
     <string name="puttZero">0 Putts</string>
     <string name="hole">Hole</string>
-    <string name="totalScore">Total Score</string>
+    <string name="holeScore">Hole Score</string>
     <string name="totalPutts">Total Putts</string>
+    <string name="zero">0</string>
     <string name="tees" />
 
 </resources>

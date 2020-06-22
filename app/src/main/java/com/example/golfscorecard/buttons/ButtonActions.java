@@ -54,6 +54,8 @@ public class ButtonActions {
     void toggleButtonStates(ToggleButton tb, Map<String, View> driveButtons, Map<String, View> approachButtons) {
         Map<Integer, ToggleButton> buttons = new HashMap<>();
 
+        buttons.clear();
+
         driveButtons.forEach((k, v) -> {
             buttons.put(v.getId(), (ToggleButton) v);
         });
@@ -74,18 +76,22 @@ public class ButtonActions {
         });
 
         if (id == A_LEFT.getId() || id == A_RIGHT.getId()) {
-            removeButtons(buttons, approachDistances, A_TREE, A_OB, A_PENALTY, A_BUNKER);
+            removeButtons(buttons, approachDistances, A_TREE, A_OB, A_PENALTY, A_BUNKER, A_GIR);
         } else if (id == A_BUNKER.getId() || id == A_OB.getId() || id == A_PENALTY.getId() || id == A_TREE.getId()) {
             removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_SHORT, A_GIR);
         } else if (id == A_GIR.getId()) {
             removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_PENALTY, A_BUNKER, A_TREE, A_MIDDLE, A_LONG, A_SHORT, A_FRINGE);
-        } else if (id == A_SHORT.getId() || id == A_MIDDLE.getId() || id == A_LONG.getId() || id == A_FRINGE.getId()) {
+        } else if (id == A_SHORT.getId() || id == A_MIDDLE.getId() || id == A_LONG.getId()) {
             removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_BUNKER, A_PENALTY, A_GIR);
+        } else if (id == A_FRINGE.getId()) {
+            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_PENALTY, A_GIR, A_SHORT, A_LONG);
         } else if (id == A_FORTY.getId() || id == A_EIGHTY.getId() || id == A_ONE_TWENTY.getId() ||
                 id == A_ONE_SIXTY.getId() || id == A_TWO_HUNDRED.getId() || id == A_TWO_HUNDRED_PLUS.getId()) {
             removeButtons(buttons, approachOutcomes);
         } else if (id == A_GREEN.getId()) {
             removeButtons(buttons, approachDistances);
+        } else {
+            buttons.clear();
         }
 
 //            case SHORT:

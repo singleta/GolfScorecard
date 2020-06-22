@@ -1,6 +1,7 @@
 package com.example.golfscorecard;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class  HoleDetails {
 
@@ -8,10 +9,10 @@ public class  HoleDetails {
     int hole;
     int par;
     int score;
-    StringBuilder fairway;
-    StringBuilder approach;
+    String fairway;
+    String approach;
     String gir;
-    StringBuilder puttLengths;
+    String puttLengths;
     int totalPutts;
     String tees;
     String distanceToHole;
@@ -51,19 +52,20 @@ public class  HoleDetails {
         this.score = Integer.parseInt(score);
     }
 
-    public StringBuilder getFairway() {
+    public String getFairway() {
         return fairway;
     }
 
-    public void setFairway(StringBuilder fairway) {
+    public void setFairway(String fairway) {
+//        String convertedValue = fairway.toString().replaceAll("F", "1");
         this.fairway = fairway;
     }
 
-    public StringBuilder getApproach() {
+    public String getApproach() {
         return approach;
     }
 
-    public void setApproach(StringBuilder approach) {
+    public void setApproach(String approach) {
         this.approach = approach;
     }
 
@@ -75,11 +77,11 @@ public class  HoleDetails {
         this.gir = gir;
     }
 
-    public StringBuilder getPuttLengths() {
+    public String getPuttLengths() {
         return puttLengths;
     }
 
-    public void setPuttLengths(StringBuilder puttLengths) {
+    public void setPuttLengths(String puttLengths) {
         this.puttLengths = puttLengths;
     }
 
@@ -104,7 +106,7 @@ public class  HoleDetails {
     }
 
     public void setDistanceToHole(String distanceToHole) {
-        this.distanceToHole = distanceToHole;
+        this.distanceToHole = distanceToHole.substring(0,1);
     }
 
     public String getApproachDistance() {
@@ -117,23 +119,24 @@ public class  HoleDetails {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-              sb.append(date).append(",")
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        sb.append(date.format(formatter)).append(",")
                 .append(hole).append(",")
                 .append(par).append(",")
                 .append(score).append(",")
                 .append(nullCheck(fairway)).append(",")
                 .append(nullCheck(approach)).append(",")
                 .append(gir).append(",")
-                .append(nullCheck(puttLengths)).append(",")
                 .append(totalPutts).append(",")
                 .append(tees).append(",")
+//                .append(nullCheck(puttLengths)).append(",")
                 .append(distanceToHole).append(",")
                 .append(approachDistance);
         return sb.toString();
         //Arrays.stream(puttLengths).forEach(System.out::println)
     }
 
-    private String nullCheck(StringBuilder sb) {
-        return (sb == null)?"":sb.toString();
+    private String nullCheck(String s) {
+        return (s == null)?"":s;
     }
 }

@@ -5,35 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/redTee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/tees"
-        android:src="@drawable/redtee"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/redTee"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:contentDescription="@string/tees"-->
+<!--        android:src="@drawable/redtee"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />-->
 
-    <ImageButton
-        android:id="@+id/whiteTee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/tees"
-        android:src="@drawable/whitetee"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/whiteTee"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:contentDescription="@string/tees"-->
+<!--        android:src="@drawable/whitetee"-->
+<!--        app:layout_constraintStart_toEndOf="@id/redTee"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />-->
 
-    <ImageButton
-        android:id="@+id/yellowTee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/tees"
-        android:src="@drawable/yellowtee"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/yellowTee"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:contentDescription="@string/tees"-->
+<!--        android:src="@drawable/yellowtee"-->
+<!--        app:layout_constraintStart_toEndOf="@id/whiteTee"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />-->
 
     <LinearLayout
         android:id="@+id/totalsLayout"

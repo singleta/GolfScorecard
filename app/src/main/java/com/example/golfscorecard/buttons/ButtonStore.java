@@ -1,5 +1,6 @@
 package com.example.golfscorecard.buttons;
 
+import android.app.Application;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import androidx.fragment.app.Fragment;
@@ -51,20 +53,12 @@ public class ButtonStore {
     private static Map<String, View> teeButtons = new LinkedHashMap<>();
     private TextView totalPuttsView;
     private int totalPutts;
-    private static int redId;
-    private static int whiteId;
-    private static int yellowId;
 
-    public static final String RED = "red";
-    public static final String WHITE = "white";
-    public static final String YELLOW = "yellow";
-    int randomId = new Random().nextInt();
+    public static final String RED = "Red";
+    public static final String WHITE = "White";
+    public static final String YELLOW = "Yellow";
 
     private static String ZERO = "0 Putts";
-    //    public static final String SHORT="0-10";
-//    public static final String MEDIUM="10-20";
-//    public static final String LONG="20-30";
-//    public static final String HUGE="30+ ";
     public static final int DLEFT = D_LEFT.getId();
     public static final int DRIGHT = D_RIGHT.getId();
     public static final int DFAIRWAY = D_FAIRWAY.getId();
@@ -91,14 +85,13 @@ public class ButtonStore {
         this.view = view;
         buttonActions = new ButtonActions(view);
         teeView = view;
-        setupTeeButtons(teeView);
         setupButtons();
     }
 
 
     private void setupButtons() {
 
-//        setupTeeButtons();
+        setupTeeButtons(view);
         setupPuttButtons();
         setupDriveButtons();
         setupApproachButtons();
@@ -143,61 +136,69 @@ public class ButtonStore {
 
 
 
-    private static void setupTeeButtons(View v) {
+    private void setupTeeButtons(View v) {
         for (Tee tee : Tee.values()) {
             ImageButton teeImageButton = new ImageButton(v.getContext());
-//            int id = View.generateViewId();
             switch (tee) {
                 case RED:
                     teeImageButton.setImageResource(R.drawable.redtee);
                     teeImageButton.setTooltipText("Winter/Red");
-                    redId = R.id.redTee;
-                    teeImageButton.setId(redId);
                     break;
                 case WHITE:
                     teeImageButton.setImageResource(R.drawable.whitetee);
                     teeImageButton.setTooltipText("White");
-                    whiteId = R.id.whiteTee;
-                    teeImageButton.setId(whiteId);
                     break;
                 case YELLOW:
                     teeImageButton.setImageResource(R.drawable.yellowtee);
                     teeImageButton.setTooltipText("Yellow");
-                    yellowId = R.id.yellowTee;
-                    teeImageButton.setId(yellowId);
                     break;
             }
             teeImageButton.setTag(tee.getTeeColour());
-//            teeImageButton.setId(id);
             teeImageButton.setBackgroundColor(Color.TRANSPARENT);
-//            teeImageButton.setOnClickListener(new Button.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    toggleTeeVisibility(view);
-//
-//                    Toast.makeText(view.getContext(), "tee selected", Toast.LENGTH_SHORT).show();
-//                }
-//
-//
-//            });
-//
-//            teeImageButton.setOnLongClickListener(new Button.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View view) {
-//                    toggleTeeVisibility(view);
-//                    Toast.makeText(view.getContext(), "tee de-selected", Toast.LENGTH_SHORT).show();
-//                    return true;
-//                }
-//            });
+            teeImageButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toggleTeeVisibility(view, tee);
+
+                    Toast.makeText(view.getContext(), "tee selected", Toast.LENGTH_SHORT).show();
+                }
+
+
+            });
 
             teeButtons.put(tee.getTeeColour(), teeImageButton);
         }
     }
 
-//    private static void toggleTeeVisibility(View view) {
-//
-//        buttonActions.toggleTeeVisibility(view);
-//    }
+    public void toggleTeeVisibility(View view, Tee tee) {
+        Map<String, View> changeButtons = new HashMap<>(2);
+        if (tee == Tee.RED) {
+            changeButtons.put(WHITE, teeButtons.get(WHITE));
+            changeButtons.put(YELLOW, teeButtons.get(YELLOW));
+//                changeVisibility(Objects.requireNonNull(buttons.get(WHITE.getTeeColour())), Objects.requireNonNull(buttons.get(YELLOW.getTeeColour())));
+        } else if (tee == Tee.WHITE) {
+            changeButtons.put(RED, teeButtons.get(RED));
+            changeButtons.put(YELLOW, teeButtons.get(YELLOW));
+        } else if (tee == Tee.YELLOW) {
+            changeButtons.put(WHITE, teeButtons.get(WHITE));
+            changeButtons.put(RED, teeButtons.get(RED));
+
+        }
+            changeVisibility(changeButtons);
+    }
+
+
+    private void changeVisibility(Map<String, View> buttons) {
+        buttons.forEach((k, b) -> {
+            View v = view.findViewWithTag(k);
+            if (v.getVisibility() == View.VISIBLE) {
+                v.setVisibility(View.INVISIBLE);
+            } else {
+                v.setVisibility(View.VISIBLE);
+            }
+
+        });
+    }
 
     private void setupPuttButtons() {
         for (PuttLength puttLength : PuttLength.values()) {
@@ -280,13 +281,6 @@ public class ButtonStore {
 
     }
 
-    private Map<String, Integer> getTeeIds() {
-        Map<String, Integer> ids = new HashMap<>();
-        ids.put(RED, getRedId());
-        ids.put(WHITE, getWhiteId());
-        ids.put(YELLOW, getYellowId());
-        return  ids;
-    }
 
     public Map<String, View> getTeeButtons() {
         return teeButtons;
@@ -352,17 +346,6 @@ public class ButtonStore {
         return totalPuttsView;
     }
 
-    public int getRedId() {
-        return redId;
-    }
-
-    public int getWhiteId() {
-        return whiteId;
-    }
-
-    public int getYellowId() {
-        return yellowId;
-    }
 
     private int shortPutts;
     private int mediumPutts;

@@ -1,13 +1,13 @@
 package com.example.golfscorecard.ui.main;
 
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.Spinner;
@@ -15,16 +15,13 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.golfscorecard.MainActivity;
 import com.example.golfscorecard.R;
 import com.example.golfscorecard.buttons.ButtonStore;
-import com.example.golfscorecard.databinding.FragmentHoleTemplateBinding;
-import com.example.golfscorecard.shots.PuttLength;
 import com.example.golfscorecard.shots.ShotOutcome;
 
 import java.util.Map;
@@ -39,6 +36,7 @@ public class HoleScoreFragment extends Fragment {
     public static final int APPROACH = 3;
     public static final int PUTTING = 4;
     Spinner scoreSelector;
+    TextView roundScore;
 
     ButtonStore buttonStore;
 
@@ -53,6 +51,7 @@ public class HoleScoreFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,42 +129,71 @@ public class HoleScoreFragment extends Fragment {
     }
 
     private void addTotalFields(View v) {
-        Integer[] score = new Integer[] {1,2,3,4,5,6,7,8,9,10};
+        Integer[] score = new Integer[] {0,1,2,3,4,5,6,7,8,9,10};
         TextView totalPuttsLabel = new TextView(v.getContext());
         totalPuttsLabel.setText(getString(R.string.totalPutts));
         TextView totalPutts = buttonStore.getTotalPuttsView();
         totalPutts.setMinWidth(50);
         totalPutts.setGravity(Gravity.CENTER);
-        totalPutts.setTextSize(18);
+        totalPutts.setTextSize(22);
         totalPutts.setText("0");
-        TextView totalScore = new TextView(v.getContext());
-        totalScore.setText(getString(R.string.totalScore));
-        totalScore.setGravity(Gravity.END);
+        totalPutts.setHint(R.string.totalPutts);
+        TextView holeScore = new TextView(v.getContext());
+        holeScore.setText(getString(R.string.holeScore));
+        holeScore.setGravity(Gravity.END);
         scoreSelector = new Spinner(v.getContext());
         // Create an ArrayAdapter using the string array and a default spinner layout
 //        ArrayAdapter<Integer> adapter = ArrayAdapter.createFromResource(this,
 //                R.array.planets_array, android.R.layout.simple_spinner_item);
-        ArrayAdapter adapter = new ArrayAdapter<Integer>(v.getContext(), R.layout.support_simple_spinner_dropdown_item, score);
+        ArrayAdapter adapter = new ArrayAdapter<Integer>(v.getContext(), R.layout.spinner_custom_layout, score);
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         scoreSelector.setAdapter(adapter);
-        EditText tScore = new EditText(v.getContext());
-        tScore.setInputType(InputType.TYPE_CLASS_NUMBER);
-        tScore.setGravity(Gravity.END);
+        scoreSelector.setSelection(0, false);
+        scoreSelector.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                updateRoundScore(adapterView.getSelectedItemPosition());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //
+            }
+
+
+        });
+
+
+        roundScore = new TextView(v.getContext());
+
+        roundScore.setGravity(Gravity.END);
+        roundScore.setText(getText(R.string.zero));
         LinearLayout layout = v.findViewById(R.id.totalsLayout);
         Space space = new Space(getContext());
         space.setMinimumWidth(200);
         layout.addView(space);
         layout.addView(totalPuttsLabel);
         layout.addView(totalPutts);
-        layout.addView(totalScore);
+        layout.addView(holeScore);
         layout.addView(scoreSelector);
-        layout.addView(tScore);
+        layout.addView(roundScore);
 //        v.add
     }
 
-    public void changeHoleScore(int score) {
-        scoreSelector.setSelection(scoreSelector.getSelectedItemPosition() + score);
+
+    public void updateRoundScore(int score) {
+//        int score = Integer.parseInt(scoreSelector.getSelectedItem().toString());
+//        roundScore.setText(String.valueOf(MainActivity.getOverallScore()+ score));
+//        MainActivity.setOverallScore(MainActivity.getOverallScore() + score);
+//        return MainActivity.getOverallScore()+ score;
+        roundScore.setText(String.valueOf(((MainActivity)getActivity()).getOverallScore()));
+    }
+
+    public int getHoleScore() {
+        return scoreSelector.getSelectedItemPosition();
     }
 }
