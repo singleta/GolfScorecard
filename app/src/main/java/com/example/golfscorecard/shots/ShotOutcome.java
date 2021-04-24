@@ -26,13 +26,13 @@ public enum ShotOutcome {
     A_MIDDLE(R.string.middle, R.string.middleOff, R.string.middleOn),
     A_LONG(R.string.longApproach, R.string.longOff, R.string.longOn),
     A_FRINGE(R.string.fringe, R.string.fringeOff, R.string.fringeOn),
-    A_GIR(R.string.gir, R.string.girOff, R.string.girOn),
-    A_FORTY(R.string.approach40off, R.string.approach40off, R.string.approach40on),
-    A_EIGHTY(R.string.approach80off, R.string.approach80off, R.string.approach80on),
-    A_ONE_TWENTY(R.string.approach120off, R.string.approach120off, R.string.approach120on),
-    A_ONE_SIXTY(R.string.approach160off, R.string.approach160off, R.string.approach160on),
-    A_TWO_HUNDRED(R.string.approach200Off, R.string.approach200Off, R.string.approach200On),
-    A_TWO_HUNDRED_PLUS(R.string.approach200PlusOff, R.string.approach200PlusOff, R.string.approach200PlusOn);
+    A_GIR(R.string.gir, R.string.girOff, R.string.girOn);
+//    A_FORTY(R.string.approach40off, R.string.approach40off, R.string.approach40on),
+//    A_EIGHTY(R.string.approach80off, R.string.approach80off, R.string.approach80on),
+//    A_ONE_TWENTY(R.string.approach120off, R.string.approach120off, R.string.approach120on),
+//    A_ONE_SIXTY(R.string.approach160off, R.string.approach160off, R.string.approach160on),
+//    A_TWO_HUNDRED(R.string.approach200Off, R.string.approach200Off, R.string.approach200On),
+//    A_TWO_HUNDRED_PLUS(R.string.approach200PlusOff, R.string.approach200PlusOff, R.string.approach200PlusOn);
 
 //    D_LEFT(R.id.driveLeft,"Left", "L"),
 //    D_FAIRWAY(R.id.driveFairway,"Fair", "F"),
@@ -59,14 +59,14 @@ public enum ShotOutcome {
     private int on;
 
     public static ShotOutcome[] approachOnly  = new ShotOutcome[]{A_LEFT, A_RIGHT, A_BUNKER, A_TREE,
-            A_OB, A_GREEN, A_GIR, A_PENALTY, A_SHORT, A_MIDDLE, A_LONG, A_FRINGE, A_FORTY, A_EIGHTY,
-            A_ONE_TWENTY, A_ONE_SIXTY, A_TWO_HUNDRED, A_TWO_HUNDRED_PLUS};
+            A_OB, A_GREEN, A_GIR, A_PENALTY, A_SHORT, A_MIDDLE, A_LONG, A_FRINGE};
 
     public static ShotOutcome[] driveOnly = new ShotOutcome[] {D_LEFT, D_FAIRWAY, D_RIGHT, D_BUNKER,
             D_TREE, D_OB, D_PENALTY, D_SHORT};
 
-    public static ShotOutcome[] approachDistances = new ShotOutcome[]{ A_FORTY,  A_EIGHTY,  A_ONE_TWENTY,
-            A_ONE_SIXTY,  A_TWO_HUNDRED, A_TWO_HUNDRED_PLUS};
+//    public static ShotOutcome[] approachDistances = new ShotOutcome[]{};
+//    A_FORTY,  A_EIGHTY,  A_ONE_TWENTY,
+//            A_ONE_SIXTY,  A_TWO_HUNDRED, A_TWO_HUNDRED_PLUS};
 
     public static ShotOutcome[] approachOutcomes = new ShotOutcome[]{A_LEFT, A_RIGHT, A_BUNKER, A_TREE,
             A_OB, A_GREEN, A_GIR, A_PENALTY, A_SHORT, A_MIDDLE, A_LONG, A_FRINGE};

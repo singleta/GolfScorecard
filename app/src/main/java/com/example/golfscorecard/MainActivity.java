@@ -15,14 +15,18 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.golfscorecard.ui.main.SectionsPagerAdapter;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -33,11 +37,14 @@ public class MainActivity extends AppCompatActivity {
     private SectionsPagerAdapter sectionsPagerAdapter;
     private SaveHoleData saveHoleData;
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     public static int OVERALL_SCORE=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_main);
         sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
 
@@ -78,13 +85,14 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, requiredPermissions, 0);
 
         File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        String filename = file.getPath() + "/" + "GolfScorecard" + LocalDateTime.now().toString() + ".csv";
+//        File file = Environment.getExternalStorageDirectory();
+        String filename = file.getPath() + "/" + "GolfScorecard" + LocalDateTime.now().toString().replace(":", "") + ".csv";
         System.out.println("File dir: " + getFilesDir());
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(filename)))
         {
-                for (HoleDetails h : allHoles) {
-                    System.out.println("writing filename: " + filename + h.toString());
-                    pw.println(h.toString());
+            System.out.println("writing filename: " + filename);
+            for (HoleDetails h : allHoles) {
+                pw.println(h.toString());
 
             }
         } catch (IOException e) {
@@ -97,12 +105,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void emailData(String filename) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-// The intent does not have a URI, so declare the "text/plain" MIME type
-        emailIntent.setType("text/plain");
+
+        emailIntent.setType("text/csv");
+
+        Uri uri = Uri.fromFile(new File(filename));
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"andrew_singleton@yahoo.co.uk"}); // recipients
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Scorecard " + filename);
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message text");
-        emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("content:" + filename));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Scorecard: " + filename);
+
+        List<HoleScoreFragment> holePages = sectionsPagerAdapter.getHolePages();
+        saveHoleData = new SaveHoleData(holePages);
+        List<HoleDetails> allHoles = saveHoleData.saveData();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (PrintWriter pw = new PrintWriter(baos))
+        {
+            System.out.println("writing email text");
+            for (HoleDetails h : allHoles) {
+                pw.println(h.toString());
+            }
+        }
+
+
+        emailIntent.putExtra(Intent.EXTRA_TEXT, baos.toString());
+        emailIntent.putExtra(Intent.ACTION_ATTACH_DATA, uri);
+//        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(emailIntent);
     }
 
     public int getOverallScore() {

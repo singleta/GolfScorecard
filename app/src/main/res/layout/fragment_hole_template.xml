@@ -35,16 +35,6 @@
 <!--        app:layout_constraintStart_toEndOf="@id/whiteTee"-->
 <!--        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />-->
 
-    <LinearLayout
-        android:id="@+id/totalsLayout"
-        android:layout_width="410dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/puttsTableLayout" />
-
     <TableLayout
         android:id="@+id/teeLayout"
         android:layout_width="match_parent"
@@ -71,9 +61,19 @@
         android:shrinkColumns="*"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/driveTableLayout">
-
-
     </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/approachDistanceLayout"
+        android:layout_width="410dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/approachTableLayout" />
 
     <TableLayout
         android:id="@+id/puttsTableLayout"
@@ -81,7 +81,19 @@
         android:layout_height="wrap_content"
         android:shrinkColumns="*"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/approachTableLayout">
+        app:layout_constraintTop_toBottomOf="@+id/approachDistanceLayout">
 
     </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/totalsLayout"
+        android:layout_width="410dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/puttsTableLayout" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

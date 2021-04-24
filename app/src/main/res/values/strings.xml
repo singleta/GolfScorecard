@@ -68,7 +68,7 @@
     <string name="approach200Off">160-200</string>
     <string name="approach200On">200</string>
     <string name="approach200PlusOff">200+</string>
-    <string name="approach200PlusOn">+</string>
+    <string name="approach200PlusOn">>200</string>
     <string name="puttZero">0 Putts</string>
     <string name="hole">Hole</string>
     <string name="holeScore">Hole Score</string>

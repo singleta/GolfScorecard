@@ -16,8 +16,8 @@ import static com.example.golfscorecard.buttons.Tee.RED;
 import static com.example.golfscorecard.buttons.Tee.WHITE;
 import static com.example.golfscorecard.buttons.Tee.YELLOW;
 import static com.example.golfscorecard.shots.ShotOutcome.A_BUNKER;
-import static com.example.golfscorecard.shots.ShotOutcome.A_EIGHTY;
-import static com.example.golfscorecard.shots.ShotOutcome.A_FORTY;
+//import static com.example.golfscorecard.shots.ShotOutcome.A_EIGHTY;
+//import static com.example.golfscorecard.shots.ShotOutcome.A_FORTY;
 import static com.example.golfscorecard.shots.ShotOutcome.A_FRINGE;
 import static com.example.golfscorecard.shots.ShotOutcome.A_GIR;
 import static com.example.golfscorecard.shots.ShotOutcome.A_GREEN;
@@ -25,10 +25,10 @@ import static com.example.golfscorecard.shots.ShotOutcome.A_LEFT;
 import static com.example.golfscorecard.shots.ShotOutcome.A_LONG;
 import static com.example.golfscorecard.shots.ShotOutcome.A_MIDDLE;
 import static com.example.golfscorecard.shots.ShotOutcome.A_OB;
-import static com.example.golfscorecard.shots.ShotOutcome.A_ONE_SIXTY;
-import static com.example.golfscorecard.shots.ShotOutcome.A_ONE_TWENTY;
-import static com.example.golfscorecard.shots.ShotOutcome.A_TWO_HUNDRED;
-import static com.example.golfscorecard.shots.ShotOutcome.A_TWO_HUNDRED_PLUS;
+//import static com.example.golfscorecard.shots.ShotOutcome.A_ONE_SIXTY;
+//import static com.example.golfscorecard.shots.ShotOutcome.A_ONE_TWENTY;
+//import static com.example.golfscorecard.shots.ShotOutcome.A_TWO_HUNDRED;
+//import static com.example.golfscorecard.shots.ShotOutcome.A_TWO_HUNDRED_PLUS;
 import static com.example.golfscorecard.shots.ShotOutcome.A_PENALTY;
 import static com.example.golfscorecard.shots.ShotOutcome.A_RIGHT;
 import static com.example.golfscorecard.shots.ShotOutcome.A_SHORT;
@@ -40,7 +40,7 @@ import static com.example.golfscorecard.shots.ShotOutcome.D_OB;
 import static com.example.golfscorecard.shots.ShotOutcome.D_PENALTY;
 import static com.example.golfscorecard.shots.ShotOutcome.D_RIGHT;
 import static com.example.golfscorecard.shots.ShotOutcome.D_TREE;
-import static com.example.golfscorecard.shots.ShotOutcome.approachDistances;
+//import static com.example.golfscorecard.shots.ShotOutcome.approachDistances;
 import static com.example.golfscorecard.shots.ShotOutcome.approachOutcomes;
 
 public class ButtonActions {
@@ -76,20 +76,20 @@ public class ButtonActions {
         });
 
         if (id == A_LEFT.getId() || id == A_RIGHT.getId()) {
-            removeButtons(buttons, approachDistances, A_TREE, A_OB, A_PENALTY, A_BUNKER, A_GIR);
+            removeButtons(buttons, A_TREE, A_OB, A_PENALTY, A_BUNKER, A_GIR);
         } else if (id == A_BUNKER.getId() || id == A_OB.getId() || id == A_PENALTY.getId() || id == A_TREE.getId()) {
-            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_SHORT, A_GIR);
+            removeButtons(buttons, A_LEFT, A_RIGHT, A_SHORT, A_GIR);
         } else if (id == A_GIR.getId()) {
-            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_PENALTY, A_BUNKER, A_TREE, A_MIDDLE, A_LONG, A_SHORT, A_FRINGE);
+            removeButtons(buttons, A_LEFT, A_RIGHT, A_PENALTY, A_BUNKER, A_TREE, A_MIDDLE, A_LONG, A_SHORT, A_FRINGE);
         } else if (id == A_SHORT.getId() || id == A_MIDDLE.getId() || id == A_LONG.getId()) {
-            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_BUNKER, A_PENALTY, A_GIR);
+            removeButtons(buttons, A_LEFT, A_RIGHT, A_BUNKER, A_PENALTY, A_GIR);
         } else if (id == A_FRINGE.getId()) {
-            removeButtons(buttons, approachDistances, A_LEFT, A_RIGHT, A_PENALTY, A_GIR, A_SHORT, A_LONG);
-        } else if (id == A_FORTY.getId() || id == A_EIGHTY.getId() || id == A_ONE_TWENTY.getId() ||
-                id == A_ONE_SIXTY.getId() || id == A_TWO_HUNDRED.getId() || id == A_TWO_HUNDRED_PLUS.getId()) {
-            removeButtons(buttons, approachOutcomes);
+            removeButtons(buttons, A_LEFT, A_RIGHT, A_PENALTY, A_GIR, A_SHORT, A_LONG);
+//        } else if (id == A_FORTY.getId() || id == A_EIGHTY.getId() || id == A_ONE_TWENTY.getId() ||
+//                id == A_ONE_SIXTY.getId() || id == A_TWO_HUNDRED.getId() || id == A_TWO_HUNDRED_PLUS.getId()) {
+//            removeButtons(buttons, approachOutcomes);
         } else if (id == A_GREEN.getId()) {
-            removeButtons(buttons, approachDistances);
+            removeButtons(buttons);
         } else {
             buttons.clear();
         }

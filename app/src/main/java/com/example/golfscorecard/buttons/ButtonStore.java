@@ -4,6 +4,7 @@ import android.app.Application;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,8 @@ public class ButtonStore {
     private static Map<String, View> teeButtons = new LinkedHashMap<>();
     private TextView totalPuttsView;
     private int totalPutts;
+    private EditText approachDistanceView;
+    private int approachDistance;
 
     public static final String RED = "Red";
     public static final String WHITE = "White";
@@ -98,6 +101,9 @@ public class ButtonStore {
         totalPuttsView = new TextView(view.getContext());
         totalPuttsView.setWidth(40);
         totalPuttsView.setTextColor(Color.BLUE);
+        approachDistanceView = new EditText(view.getContext());
+        approachDistanceView.setWidth(200);
+        approachDistanceView.setTextColor(Color.MAGENTA);
 
     }
 
@@ -346,6 +352,17 @@ public class ButtonStore {
         return totalPuttsView;
     }
 
+    public EditText getApproachDistanceView() {
+        return approachDistanceView;
+    }
+
+    public int getApproachDistance() {
+        return approachDistance;
+    }
+
+    public void setApproachDistance(int approachDistance) {
+        this.approachDistance = approachDistance;
+    }
 
     private int shortPutts;
     private int mediumPutts;

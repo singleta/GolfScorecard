@@ -2,6 +2,7 @@ package com.example.golfscorecard;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -128,14 +129,12 @@ public class SaveHoleData {
             case R.id.approachTableLayout:
                 // If the button value contains a number it's the approach distance
                 // otherwise it's the shot result
-                if (text.contains("0")) {
-                    holeDetails.setApproachDistance(text);
+                if (text.contains("G")) {
+                    holeDetails.setGir("G");
                 } else {
-                    if (text.contains("G")) {
-                        holeDetails.setGir("G");
-                    }
-                    holeDetails.setApproach(addToStringValues(text, holeDetails.getApproach()));
+                    holeDetails.setGir("");
                 }
+                holeDetails.setApproach(addToStringValues(text, holeDetails.getApproach()));
                 break;
         }
     }
@@ -157,6 +156,10 @@ public class SaveHoleData {
                     holeDetails.setScore(text);
                 }
             }
+        } else if (view.getId() == R.id.approachDistanceLayout) {
+            LinearLayout layout = (LinearLayout) view;
+            EditText et = (EditText) layout.getChildAt(1);
+            holeDetails.setApproachDistance(et.getText().toString());
         }
     }
 

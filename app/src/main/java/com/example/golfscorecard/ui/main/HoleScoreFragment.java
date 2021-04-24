@@ -1,6 +1,8 @@
 package com.example.golfscorecard.ui.main;
 
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.Spinner;
@@ -40,11 +43,14 @@ public class HoleScoreFragment extends Fragment {
 
     ButtonStore buttonStore;
 
+    private static final String TAG = HoleScoreFragment.class.getSimpleName();
+
     public static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
 
     public HoleScoreFragment newInstance(int index) {
+        Log.d(TAG, "newInstance");
         HoleScoreFragment fragment = new HoleScoreFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
@@ -52,10 +58,10 @@ public class HoleScoreFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         pageViewModel = ViewModelProviders.of(this).get(PageViewModel.class);
         int index = 1;
         if (getArguments() != null) {
@@ -76,9 +82,11 @@ public class HoleScoreFragment extends Fragment {
     }
 
     private void placeButtons(View view) {
+        Log.d(TAG, "placeButtons");
         placeButtons(view, buttonStore.getTeeButtons(), TEE);
         placeButtons(view, buttonStore.getDriveButtons(), DRIVE);
         placeButtons(view, buttonStore.getApproachButtons(), APPROACH);
+        addApproachDistance(view);
         placeButtons(view, buttonStore.getPuttButtons(), PUTTING);
         addTotalFields(view);
     }
@@ -118,8 +126,8 @@ public class HoleScoreFragment extends Fragment {
         tr.addView(rowLabel);
         for (Map.Entry<String, View> es : buttons.entrySet()) {
             if (tr.getChildCount() == 5 ||
-                    es.getKey().equals(ShotOutcome.A_FORTY.name()) ||
-                    es.getKey().equals(ShotOutcome.A_TWO_HUNDRED.name()) ||
+//                    es.getKey().equals(ShotOutcome.A_FORTY.name()) ||
+//                    es.getKey().equals(ShotOutcome.A_TWO_HUNDRED.name()) ||
                     es.getKey().equals(getString(R.string.puttZero))) {
                 tr = new TableRow(layout.getContext());
                 layout.addView(tr);
@@ -128,7 +136,27 @@ public class HoleScoreFragment extends Fragment {
         }
     }
 
+    private void addApproachDistance(View v) {
+        Log.d(TAG, "addApproachDistanceView");
+        TextView approachDistanceLabel = new TextView(v.getContext());
+        approachDistanceLabel.setText("Approach Distance");
+        EditText approachDistance = buttonStore.getApproachDistanceView();
+        approachDistance.setMinWidth(200);
+        approachDistance.setGravity(Gravity.CENTER);
+        approachDistance.setTextSize(22);
+        approachDistance.setText("100");
+        approachDistance.setInputType(InputType.TYPE_CLASS_NUMBER);
+        approachDistance.setSelectAllOnFocus(true);
+        approachDistance.clearFocus();
+
+        LinearLayout layout = v.findViewById(R.id.approachDistanceLayout);
+        layout.addView(approachDistanceLabel);
+        layout.addView(approachDistance);
+
+    }
+
     private void addTotalFields(View v) {
+        Log.d(TAG, "addTotalFields");
         Integer[] score = new Integer[] {0,1,2,3,4,5,6,7,8,9,10};
         TextView totalPuttsLabel = new TextView(v.getContext());
         totalPuttsLabel.setText(getString(R.string.totalPutts));
